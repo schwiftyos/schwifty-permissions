@@ -8,10 +8,10 @@
 public struct SchwiftyPermissions : Sendable {
     @MainActor public static var shared:SchwiftyPermissions = SchwiftyPermissions()
 
-    var applications:[UInt64:ApplicationPermissions]
+    var programs:[UInt64:ProcessPermissions]
 
     public init() {
-        applications = [:]
+        programs = [:]
     }
 
     public func load() {

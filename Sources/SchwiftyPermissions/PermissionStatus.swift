@@ -25,6 +25,6 @@ public enum PermissionStatus : UInt8, Sendable {
     /// Access is only allowed if granted by the user, when requested.
     case uponRequest
 
-    /// Access is only allowed temporarily.
-    case temporary
+    /// Access is only allowed until the program is terminated.
+    case untilTermination
 }
