@@ -5,7 +5,7 @@
 //  Created by Evan Anderson on 2/6/25.
 //
 
-/// Current status of a permission.
+/// List of available statuses a permission can have.
 public enum PermissionStatus : Hashable, Sendable {
     /// Access is never allowed.
     case never
@@ -26,11 +26,15 @@ public enum PermissionStatus : Hashable, Sendable {
     case uponRequest
 
     /// Access is only allowed temporarily, until a set time.
-    case temporarily(ContinuousClock.Instant)
+    case temporarilyUntil(ContinuousClock.Instant)
+
+    /// Access is only allowed temporarily, between two given times of day.
+    //case temporarilyBetween(Double, Double) // TODO: support
 }
 
 extension PermissionStatus {
-    public func isAllowed(state: ProgramState) -> Bool {
+    @inlinable
+    public func isAllowed(for state: ProgramState) -> Bool {
         switch self {
         case .never: return false
         case .always: return true
@@ -38,7 +42,7 @@ extension PermissionStatus {
         case .onlyInBackground: return state == .background
         case .onlyInForeground: return state == .foreground
         case .uponRequest: return true // TODO: fix
-        case .temporarily(let expires): return ContinuousClock.now <= expires
+        case .temporarilyUntil(let expires): return ContinuousClock.now <= expires
         }
     }
 }

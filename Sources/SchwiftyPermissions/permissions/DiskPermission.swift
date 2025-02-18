@@ -25,6 +25,18 @@ public struct DiskPermission : SchwiftyPermission {
     var permissions:UInt8
 }
 
+// MARK: Default
+extension DiskPermission {
+    public static let `default`:Self = Self(
+        status: .onlyInUse,
+        pathReadWhitelist: [],
+        pathReadBlacklist: [],
+        pathWriteWhitelist: [],
+        pathWriteBlacklist: [],
+        permissions: .max
+    )
+}
+
 // MARK: Action
 extension DiskPermission {
     public enum Action : Sendable {
@@ -35,7 +47,7 @@ extension DiskPermission {
 
     @inlinable
     public func canPerform(state: ProgramState, action: Action) -> Bool {
-        guard status.isAllowed(state: state) else { return false }
+        guard status.isAllowed(for: state) else { return false }
         switch action {
         case .read(let path):
             return canRead && (pathReadWhitelist.isEmpty || pathReadWhitelist.contains(path)) && !pathReadBlacklist.contains(path)

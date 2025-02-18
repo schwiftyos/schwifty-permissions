@@ -13,6 +13,14 @@ public struct ManipulatePermission : SchwiftyPermission {
     var programs:[String:Program]
 }
 
+// MARK: Default
+extension ManipulatePermission {
+    public static let `default`:Self = Self(
+        status: .never,
+        programs: [:]
+    )
+}
+
 // MARK: Program
 extension ManipulatePermission {
     /// Permissions for a program that can be manipulated.
@@ -23,14 +31,14 @@ extension ManipulatePermission {
 }
 
 extension ManipulatePermission.Program {
-    /// Whether or not the program with program manipulation permission has permission to change permissions
+    /// Whether or not the program with program manipulation permission can change permissions
     /// of a program it has access to manipulate.
     @inlinable
     public var canChangePermissions : Bool {
         permissions & 0b1 != 0
     }
     
-    /// Whether or not the program with program manipulation permission can change the permissions
+    /// Whether or not the program with program manipulation permission can change permissions
     /// of a program it has access to manipulate without user interaction.
     @inlinable
     public var canChangePermissionsWithoutUserInteraction : Bool {

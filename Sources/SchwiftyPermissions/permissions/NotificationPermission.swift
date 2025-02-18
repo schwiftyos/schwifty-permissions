@@ -17,6 +17,16 @@ public struct NotificationPermission : SchwiftyPermission {
     var permissions:UInt8
 }
 
+// MARK: Default
+extension NotificationPermission {
+    public static let `default`:Self = Self(
+        status: .onlyInUse,
+        displayType: .list,
+        sound: nil,
+        permissions: .max
+    )
+}
+
 // MARK: DisplayType
 extension NotificationPermission {
     public enum DisplayType : Sendable {

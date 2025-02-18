@@ -10,9 +10,11 @@ public struct ProcessPermissions : Sendable {
     var state:ProgramState
 
     var disk:DiskPermission! = nil
+    var location:LocationPermission! = nil
     var manipulation:ManipulatePermission! = nil
     var network:NetworkPermission! = nil
     var notifications:NotificationPermission! = nil
+    var wallet:WalletPermission! = nil
 
     /*public mutating func get(
         for permission: SchwiftyPermission,

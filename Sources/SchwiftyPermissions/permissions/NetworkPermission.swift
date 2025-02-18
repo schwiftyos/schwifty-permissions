@@ -22,6 +22,17 @@ public struct NetworkPermission : SchwiftyPermission {
     var uploadPermissions:UInt8
 }
 
+// MARK: Default
+extension NetworkPermission {
+    public static let `default`:Self = Self(
+        status: .onlyInUse,
+        urlWhitelist: [],
+        urlBlacklist: [],
+        downloadPermissions: .max,
+        uploadPermissions: .max
+    )
+}
+
 // MARK: ConnectionType
 extension NetworkPermission {
     public enum ConnectionType : Sendable {
