@@ -43,6 +43,7 @@ extension PermissionStatus {
         case .onlyInForeground: return state == .foreground
         case .uponRequest: return true // TODO: fix
         case .temporarilyUntil(let expires): return ContinuousClock.now <= expires
+        @unknown default: return false
         }
     }
 }

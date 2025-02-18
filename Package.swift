@@ -8,6 +8,7 @@ let package = Package(
     products: [
         .library(
             name: "SchwiftyPermissions",
+            type: .dynamic,
             targets: ["SchwiftyPermissions"]
         )
     ],
@@ -15,7 +16,10 @@ let package = Package(
     targets: [
         .target(
             name: "SchwiftyPermissions",
-            dependencies: []
+            dependencies: [],
+            swiftSettings: [
+                .unsafeFlags(["-enable-library-evolution"])
+            ]
         ),
         .testTarget(
             name: "SchwiftyPermissionsTests",

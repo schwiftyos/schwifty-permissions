@@ -53,6 +53,8 @@ extension DiskPermission {
             return canRead && (pathReadWhitelist.isEmpty || pathReadWhitelist.contains(path)) && !pathReadBlacklist.contains(path)
         case .write(let path):
             return canWrite && (pathWriteBlacklist.isEmpty || pathWriteWhitelist.contains(path)) && !pathWriteBlacklist.contains(path)
+        @unknown default:
+            return false
         }
     }
 }

@@ -54,6 +54,7 @@ extension NetworkPermission {
         case .hotspot: return canDownloadHotspot
         case .cellular: return canDownloadCellular
         case .vpn: return canDownloadVPN
+        @unknown default: return false
         }
     }
 
@@ -67,6 +68,7 @@ extension NetworkPermission {
         case .hotspot: return canUploadHotspot
         case .cellular: return canUploadCellular
         case .vpn: return canUploadVPN
+        @unknown default: return false
         }
     }
 }

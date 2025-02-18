@@ -6,9 +6,9 @@
 //
 
 #if canImport(FoundationEssentials)
-import FoundationEssentials
+import FoundationEssentials // TODO: fix
 #elseif canImport(Foundation)
-import Foundation
+import Foundation // TODO: fix
 #endif
 
 /// Wallet permissions for a program.

@@ -6,7 +6,7 @@
 //
 
 public protocol SchwiftyPermission : Sendable {
-    /// Default permissions.
+    /// Default values for this permission.
     static var `default` : Self { get }
 
     /// Current status of a permission.
