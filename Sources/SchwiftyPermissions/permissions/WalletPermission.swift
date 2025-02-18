@@ -15,8 +15,19 @@ import Foundation
 public struct WalletPermission : SchwiftyPermission {
     public private(set) var status:PermissionStatus
 
-    var creditCards:[CreditCard]
-    var debitCards:[DebitCard]
+#if canImport(FoundationEssentials) || canImport(Foundation)
+    /// The allowed credit cards a program has access to.
+    public private(set) var creditCards:[UUID]
+
+    /// The allowed debit cards a program has access to.
+    public private(set) var debitCards:[UUID]
+#else
+    /// The allowed credit cards a program has access to.
+    public private(set) var creditCards:[UInt64]
+
+    /// The allowed debit cards a program has access to.
+    public private(set) var debitCards:[UInt64]
+#endif
 }
 
 // MARK: Default
@@ -26,50 +37,4 @@ extension WalletPermission {
         creditCards: [],
         debitCards: []
     )
-}
-
-// MARK: CreditCard
-extension WalletPermission {
-    public struct CreditCard : Sendable {
-        #if canImport(FoundationEssentials) || canImport(Foundation)
-        public let id:UUID
-        #else
-        public let id:UInt64
-        #endif
-
-        public let label:String?
-        public let number:UInt64
-        public let expires:Expiration
-        public let code:UInt16
-    }
-}
-
-extension WalletPermission.CreditCard {
-    public struct Expiration : Sendable {
-        public let month:UInt8
-        public let year:UInt16
-    }
-}
-
-// MARK: DebitCard
-extension WalletPermission {
-    public struct DebitCard : Sendable {
-        #if canImport(FoundationEssentials) || canImport(Foundation)
-        public let id:UUID
-        #else
-        public let id:UInt64
-        #endif
-
-        public let label:String?
-        public let number:UInt64
-        public let expires:Expiration
-        public let code:UInt16
-    }
-}
-
-extension WalletPermission.DebitCard {
-    public struct Expiration : Sendable {
-        public let month:UInt8
-        public let year:UInt16
-    }
 }
