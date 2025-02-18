@@ -6,7 +6,7 @@
 //
 
 /// Current status of a permission.
-public enum PermissionStatus : UInt8, Sendable {
+public enum PermissionStatus : Hashable, Sendable {
     /// Access is never allowed.
     case never
 
@@ -25,6 +25,20 @@ public enum PermissionStatus : UInt8, Sendable {
     /// Access is only allowed if granted by the user, when requested.
     case uponRequest
 
-    /// Access is only allowed until the program is terminated.
-    case untilTermination
+    /// Access is only allowed temporarily, until a set time.
+    case temporarily(ContinuousClock.Instant)
+}
+
+extension PermissionStatus {
+    public func isAllowed(state: ProgramState) -> Bool {
+        switch self {
+        case .never: return false
+        case .always: return true
+        case .onlyInUse: return state != .notRunning
+        case .onlyInBackground: return state == .background
+        case .onlyInForeground: return state == .foreground
+        case .uponRequest: return true // TODO: fix
+        case .temporarily(let expires): return ContinuousClock.now <= expires
+        }
+    }
 }

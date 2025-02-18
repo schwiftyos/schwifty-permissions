@@ -7,21 +7,19 @@
 
 /// Permissions for a process.
 public struct ProcessPermissions : Sendable {
-    var internetDownload:PermissionSnapshot<InternetData>! = nil
-    var diskRead:PermissionSnapshot<DiskData>! = nil
+    var state:ProgramState
 
-    public mutating func get(
+    var disk:DiskPermission! = nil
+    var manipulation:ManipulatePermission! = nil
+    var network:NetworkPermission! = nil
+    var notifications:NotificationPermission! = nil
+
+    /*public mutating func get(
         for permission: SchwiftyPermission,
         onBehalfOf program: UInt64,
         reason: String
     ) async -> AnyPermissionSnapshot {
         switch permission {
-        case .internetDownload:
-            if internetDownload == nil { internetDownload = await requestPermission(permission, onBehalfOf: program, reason: reason) }
-            return internetDownload
-        case .diskRead:
-            if diskRead == nil { diskRead = await requestPermission(permission, onBehalfOf: program, reason: reason) }
-            return diskRead
         default:
             return PermissionSnapshot(status: .never, data: Empty())
         }
@@ -45,7 +43,7 @@ public struct ProcessPermissions : Sendable {
             return PermissionSnapshot(status: p, data: T())
         }
         return PermissionSnapshot(status: .never, data: T())
-    }
+    }*/
 
 
     /// - Returns: The selected Permission Status code.
