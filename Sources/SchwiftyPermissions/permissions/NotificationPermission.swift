@@ -20,7 +20,7 @@ public struct NotificationPermission : SchwiftyPermission {
 // MARK: Default
 extension NotificationPermission {
     public static let `default`:Self = Self(
-        status: .onlyInUse,
+        status: .uponRequest,
         displayType: .list,
         sound: nil,
         permissions: .max

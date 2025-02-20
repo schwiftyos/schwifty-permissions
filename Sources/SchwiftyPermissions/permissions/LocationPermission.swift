@@ -15,7 +15,7 @@ public struct LocationPermission : SchwiftyPermission {
 // MARK: Default
 extension LocationPermission {
     public static let `default`:Self = Self(
-        status: .onlyInUse,
+        status: .uponRequest,
         accuracy: .approximate
     )
 }

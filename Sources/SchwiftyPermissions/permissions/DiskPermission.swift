@@ -28,7 +28,7 @@ public struct DiskPermission : SchwiftyPermission {
 // MARK: Default
 extension DiskPermission {
     public static let `default`:Self = Self(
-        status: .onlyInUse,
+        status: .uponRequest,
         pathReadWhitelist: [],
         pathReadBlacklist: [],
         pathWriteWhitelist: [],

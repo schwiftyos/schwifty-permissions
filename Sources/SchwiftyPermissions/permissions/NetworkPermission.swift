@@ -25,7 +25,7 @@ public struct NetworkPermission : SchwiftyPermission {
 // MARK: Default
 extension NetworkPermission {
     public static let `default`:Self = Self(
-        status: .onlyInUse,
+        status: .uponRequest,
         urlWhitelist: [],
         urlBlacklist: [],
         downloadPermissions: .max,

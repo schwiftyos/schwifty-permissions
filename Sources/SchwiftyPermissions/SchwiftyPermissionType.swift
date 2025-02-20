@@ -20,49 +20,17 @@ public enum SchwiftyPermissionType : Sendable {
     /// Access the system's camera input.
     case camera
 
-    /// Access the system's location.
-    case location
-
     /// Read the microphone input.
     case microphoneRead
 
     /// Write to the microphone input.
     case microphoneWrite
 
-    // MARK: network
-    // localNetwork
-    case localNetworkDownload
-    case localNetworkUpload
-
-    // internet
-    case internetDownload
-    case internetUpload
-
-    // wifi
-    case wifiDownload
-    case wifiUpload
-
-    // cellular
-    case cellularDownload
-    case cellularUpload
-    
-    // hotspot
-    case hotspotDownload
-    case hotspotUpload
-
-    // MARK: disk
-    /// Whether or not this program can read data on disk.
-    case diskRead
-
-    /// Whether or not this program can write data to disk.
-    case diskWrite
-
     case inputMonitoring
 
     case liveActivities
     case loginItem
 
-    case notifications
     case remoteDesktop
     case screenRecording
     case search
@@ -75,18 +43,7 @@ public enum SchwiftyPermissionType : Sendable {
     case systemInstalledPrograms
     case systemInstalledWidgets
 
-    // MARK: program manipulation
-    /// Whether or not this program can manipulate a running program on the system without direct user interaction.
-    case programManipulation
-
-    /// Whether or not this program can request permission changes of another program.
-    case programRequestPermissionChanges
-
-    /// Whether or not this program can grant permission changes of another program.
-    case programGrantPermissionChanges
-
     // MARK: continuity
-    case calendar
     case contacts
     case mail
     case notes
@@ -95,5 +52,4 @@ public enum SchwiftyPermissionType : Sendable {
     case passwords
     case photos
     case reminders
-    case wallet
 }

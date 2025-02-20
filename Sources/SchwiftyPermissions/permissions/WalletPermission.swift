@@ -33,7 +33,7 @@ public struct WalletPermission : SchwiftyPermission {
 // MARK: Default
 extension WalletPermission {
     public static let `default`:Self = Self(
-        status: .never,
+        status: .uponRequest,
         creditCards: [],
         debitCards: []
     )
