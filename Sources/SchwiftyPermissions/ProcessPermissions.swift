@@ -9,7 +9,6 @@
 public struct ProcessPermissions : Sendable {
     var state:ProgramState
 
-    var calendar:CalendarPermission!
     var disk:DiskPermission! = nil
     var location:LocationPermission! = nil
     var manipulation:ManipulatePermission! = nil
@@ -19,7 +18,7 @@ public struct ProcessPermissions : Sendable {
 
     /*public mutating func get(
         for permission: SchwiftyPermission,
-        onBehalfOf pid: UInt64,
+        onBehalfOf program: Program,
         reason: String
     ) async -> AnyPermissionSnapshot {
         switch permission {
@@ -30,18 +29,18 @@ public struct ProcessPermissions : Sendable {
 
     public mutating func status(
         for permission: SchwiftyPermission,
-        onBehalfOf pid: UInt64,
+        onBehalfOf program: Program,
         reason: String
     ) async -> PermissionStatus {
-        return await get(for: permission, onBehalfOf: pid, reason: reason).status
+        return await get(for: permission, onBehalfOf: program, reason: reason).status
     }
-    
-    mutating func requestPermission<T: SchwiftyPermission>(
-        _ permission: T,
-        onBehalfOf pid: UInt64,
+
+    mutating func requestPermission<T: PermissionSnapshotData>(
+        _ permission: SchwiftyPermission,
+        onBehalfOf program: Program,
         reason: String
-    ) async -> Bool {
-        if let result:UInt8 = await promptPermission(permission, pid: pid, reason: reason), let p:PermissionStatus = PermissionStatus(rawValue: result) {
+    ) async -> PermissionSnapshot<T> {
+        if let result:UInt8 = await promptPermission(permission, requestor: Program, reason: reason), let p:PermissionStatus = PermissionStatus(rawValue: result) {
             // TODO: finish
             return PermissionSnapshot(status: p, data: T())
         }
@@ -52,7 +51,7 @@ public struct ProcessPermissions : Sendable {
     /// - Returns: The selected Permission Status code.
     func promptPermission(
         _ permission: SchwiftyPermission,
-        pid: UInt64,
+        requestor: Program,
         reason: String
     ) async -> UInt8? {
         // TODO: add UI prompt and completion handler callback

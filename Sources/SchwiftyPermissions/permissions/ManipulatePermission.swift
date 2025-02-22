@@ -9,15 +9,15 @@
 public struct ManipulatePermission : SchwiftyPermission {
     public private(set) var status:PermissionStatus
 
-    /// - Usage: [`Program Identifier` : `Program`]
-    var programs:[String:Program]
+    /// - Usage: [`Program`]
+    var programs:[Program]
 }
 
 // MARK: Default
 extension ManipulatePermission {
     public static let `default`:Self = Self(
         status: .never,
-        programs: [:]
+        programs: []
     )
 }
 

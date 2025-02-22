@@ -6,7 +6,7 @@
 //
 
 public enum PermissionError : Error {
-    case operationNotPermitted
+    case operationDenied
 
     case notOnWhitelist
     case onBlacklist
