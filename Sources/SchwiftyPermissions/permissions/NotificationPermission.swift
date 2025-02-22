@@ -9,10 +9,6 @@
 public struct NotificationPermission : SchwiftyPermission {
     public private(set) var status:PermissionStatus
 
-    public private(set) var displayType:DisplayType
-
-    public private(set) var sound:String? // TODO: make struct
-
     @usableFromInline
     var permissions:UInt8
 }
@@ -21,34 +17,33 @@ public struct NotificationPermission : SchwiftyPermission {
 extension NotificationPermission {
     public static let `default`:Self = Self(
         status: .uponRequest,
-        displayType: .list,
-        sound: nil,
         permissions: .max
     )
 }
 
-// MARK: DisplayType
+// MARK: Send
 extension NotificationPermission {
-    public enum DisplayType : Sendable {
-        case count
-        case stack
-        case list
+    @inlinable
+    public var canSend : Bool {
+        permissions & 0b1 != 0
     }
-}
 
-// MARK: Critical
-extension NotificationPermission {
-}
+    @inlinable
+    public var canSendCritical : Bool {
+        permissions & 0b01 != 0
+    }
 
-// MARK: Time sensitive
-extension NotificationPermission {
+    @inlinable
+    public var canSendTimeSensitive : Bool {
+        permissions & 0b001 != 0
+    }
 }
 
 // MARK: Badge
 extension NotificationPermission {
     @inlinable
     public var canShowBadge : Bool {
-        permissions & 0b1 != 0
+        permissions & 0b0001 != 0
     }
 }
 
@@ -56,6 +51,6 @@ extension NotificationPermission {
 extension NotificationPermission {
     @inlinable
     public var canPlaySound : Bool {
-        permissions & 0b01 != 0
+        permissions & 0b00001 != 0
     }
 }
