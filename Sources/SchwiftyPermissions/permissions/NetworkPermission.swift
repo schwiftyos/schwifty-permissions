@@ -36,12 +36,12 @@ extension NetworkPermission {
 // MARK: ConnectionType
 extension NetworkPermission {
     public enum ConnectionType : UInt8, Sendable {
-        case local    = 2
-        case wired    = 4
-        case wireless = 8
-        case hotspot  = 16
-        case cellular = 32
-        case vpn      = 64
+        case local    = 1
+        case wired    = 2
+        case wireless = 4
+        case hotspot  = 8
+        case cellular = 16
+        case vpn      = 32
     }
 }
 
