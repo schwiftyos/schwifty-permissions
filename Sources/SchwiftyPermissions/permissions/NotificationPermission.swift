@@ -27,15 +27,15 @@ extension NotificationPermission {
 
 // MARK: AlertType
 extension NotificationPermission {
-    public enum AlertType : UInt8 {
+    public enum AlertType : UInt8, Sendable {
         /// Regular notification.
-        case normal        = 2
+        case normal        = 1
 
         /// Warning, hazard, critical notification.
-        case critical      = 4
+        case critical      = 2
 
         // TODO: add documentation
-        case timeSensitive = 8
+        case timeSensitive = 4
     }
 
     @inlinable
