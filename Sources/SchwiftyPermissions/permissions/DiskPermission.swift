@@ -7,6 +7,8 @@
 
 /// Disk permissions for a program.
 public struct DiskPermission : SchwiftyPermission {
+    public static let permissionType:SchwiftyPermissionType = .disk
+
     public private(set) var status:PermissionStatus
 
     /// Absolute paths the program can read.
@@ -47,7 +49,7 @@ extension DiskPermission {
 
     @inlinable
     public func canPerform(state: ProgramState, action: Action) -> Bool {
-        guard status.isAllowed(for: state) else { return false }
+        guard state.allowsPermissionStatus(status) else { return false }
         switch action {
         case .read(let path):
             return canRead && (pathReadWhitelist.isEmpty || pathReadWhitelist.contains(path)) && !pathReadBlacklist.contains(path)

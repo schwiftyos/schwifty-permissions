@@ -12,7 +12,9 @@ let package = Package(
             targets: ["SchwiftyPermissions"]
         )
     ],
-    dependencies: [],
+    dependencies: [
+        // TODO: add logging library
+    ],
     targets: [
         .target(
             name: "SchwiftyPermissions",

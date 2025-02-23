@@ -5,87 +5,58 @@
 //  Created by MinerMinerMods on 2/9/25.
 //
 
-/// Declares a Program with
-public actor Program {
-	public typealias PID = UInt64
+public struct Program : Sendable {
+	public typealias ApplicationID = String
+	public typealias ProcessID = UInt64
+	
+	public let applicationID:ApplicationID
+	public let pid:ProcessID
 
-	public private(set) var name:String
-	public private(set) var pid:PID
+	/// The process owner.
+	/// 
+	/// - Warning: All programs are minimally owned by the root process
+	public private(set) var ownerpid:ProcessID
 
-	/// Indicates the owner proccess.
-	/// - Warning: All programs are minimally owned by the root proccess
-	public private(set) var ownerpid:PID = 0
+	/// Current processing state of this program.
+	public private(set) var state:ProgramState
 
-	public internal(set) var permissions:[SchwiftyPermission] {
-		get { _permissions }
-		set (new) {
-			guard new != _permissions else { return }
-			guard _permissions.contains(.programRequestPermissionChanges) else {
-				throw PermissionError.requestDisallowed(reason:"Missing SchwiftyPermission.programRequestPermissionChanges")
-			}
-			for (i, item) in new.enumerated() {
-				if !(_permissions.contains(item)) {
-					do {
-						_permissions.append( try self.requestPermission(item).get() )
-					} catch(let error) {
-						print("Unable to authorize the permission: \(item).")
-						#if DEBUG
-							print(error)
-						#else
-							print("Use DEBUG for more info")
-						#endif
-					}
-				}
-			}
-		}
-	}
-
-	// To prevent a Program instance from arbitraily messing around with this from an extension
-	fileprivate var _permissions:[SchwiftyPermission] = []
-
-	public init(name:String? = nil, pid:PID) {
-		self.name = name ?? "Program \(pid)"
+	init(
+		ownerpid: ProcessID = 0,
+		pid: ProcessID,
+		state: ProgramState = .notRunning,
+		applicationID: String
+	) {
+		self.applicationID = applicationID
 		self.pid = pid
-	}
-
-	public func requestPermission(_ perm: SchwiftyPermission) throws -> Result<[ProcessPermissions], PermissionError> {
-		guard permissions.contains(SchwiftyPermission.programRequestPermissionChanges) || perm == SchwiftyPermission.programRequestPermissionChanges else { throw PermissionError.requestDisallowed(reason:"Missing Required Permission `.programRequestPermissionChanges`") }
-		guard permissions.contains(perm) else {return true}
-		var result = await requestPermission( for: SchwiftyPermission, onBehalfOf: self)
-		guard result.status != .never else {
-			return .failure(.operationDenied)
-		}
-		return .success(result)
-	}
-
-	/// Causes all access to
-	package func refreshPermissions() {
-		self.permissions = PermissionStorage.shared.programs[self]
-	}
-
-	internal func refreshPermissions(from permStore: PermissionStorage) {
-		self.permissions = permStore.programs[self.hash()]
-	}
-
-	package func updateRefrence(in permStore: PermissionStorage) {
-		permStore.changeRefrence(oldhash, currenthash)
+		self.ownerpid = ownerpid
+		self.state = state
 	}
 }
 
-extension Program:Hashable{
-	public isolated func hash() -> Int {
-		var hasher = Hasher()
-		self.hash(into: &hasher)
-		return hasher.finalize()
+// MARK: Equatable
+extension Program : Equatable {
+	@inlinable
+	public static func == (lhs: Program, rhs: Program) -> Bool {
+		return lhs.ownerpid == rhs.ownerpid && lhs.pid == rhs.pid
 	}
+}
 
-	public isolated func hash(into hasher: inout Hasher) {
-		hasher.combine(pid)
-		hasher.combine(name)
+// MARK: Hashable
+extension Program : Hashable {
+	@inlinable
+	public func hash(into hasher: inout Hasher) {
 		hasher.combine(ownerpid)
+		hasher.combine(pid)
 	}
 }
 
-extension Program: Equatable {
-
+// MARK: Permissions
+extension Program {
+	@inlinable
+	public func request<T: SchwiftyPermission>(
+		_ permission: SchwiftyPermissionType,
+		reason: String
+	) async throws -> Result<T, PermissionError> {
+		return await PermissionStorage.shared.permissions(for: self).request(permission, for: self, reason: reason)
+	}
 }

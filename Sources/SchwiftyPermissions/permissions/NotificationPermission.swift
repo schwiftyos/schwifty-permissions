@@ -7,6 +7,8 @@
 
 /// Notification permissions for a program.
 public struct NotificationPermission : SchwiftyPermission {
+    public static let permissionType:SchwiftyPermissionType = .notification
+
     public private(set) var status:PermissionStatus
 
     @usableFromInline

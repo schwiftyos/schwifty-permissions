@@ -7,6 +7,8 @@
 
 /// Manipulation permissions for a program.
 public struct ManipulatePermission : SchwiftyPermission {
+    public static let permissionType:SchwiftyPermissionType = .manipulation
+
     public private(set) var status:PermissionStatus
 
     /// - Usage: [`Program`]
