@@ -12,7 +12,7 @@ public struct ManipulatePermission : SchwiftyPermission {
     public private(set) var status:PermissionStatus
 
     /// - Usage: [`Process ID` : `Manipulation Permissions for the process`]
-    var process:[SchwiftyPermissions.Program.ProcessID:Process]
+    var processes:[SchwiftyPermissions.Program.ProcessID:Process]
     
     /// - Usage: [`Program Application ID` : `Manipulation Permissions for the program`]
     var programs:[SchwiftyPermissions.Program.ApplicationID:Process]
@@ -22,7 +22,7 @@ public struct ManipulatePermission : SchwiftyPermission {
 extension ManipulatePermission {
     public static let `default`:Self = Self(
         status: .never,
-        process: [:],
+        processes: [:],
         programs: [:]
     )
 }

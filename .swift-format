@@ -8,7 +8,6 @@
     "indentSwitchCaseLabels": false,
     "lineBreakBeforeControlFlowKeywords": false,
     "lineBreakBeforeEachArgument": false,
-    "maximumBlankLines": false,
     "respectsExistingLineBreaks": true,
     "multiElementCollectionTrailingCommas": true,
     "spacesAroundRangeFormationOperators": false,
