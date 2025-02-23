@@ -49,25 +49,25 @@ extension ProcessPermissions {
     ) -> T {
         switch permission {
         case .calendar:
-            if calendar == nil { calendar = .settings(for: program) }
+            if calendar == nil { calendar = .loadSettings(for: program) }
             return calendar as! T
         case .disk:
-            if disk == nil { disk = .settings(for: program) }
+            if disk == nil { disk = .loadSettings(for: program) }
             return disk as! T
         case .location:
-            if location == nil { location = .settings(for: program) }
+            if location == nil { location = .loadSettings(for: program) }
             return location as! T
         case .manipulation:
-            if manipulation == nil { manipulation = .settings(for: program) }
+            if manipulation == nil { manipulation = .loadSettings(for: program) }
             return manipulation as! T
         case .network:
-            if network == nil { network = .settings(for: program) }
+            if network == nil { network = .loadSettings(for: program) }
             return network as! T
         case .notification:
-            if notifications == nil { notifications = .settings(for: program) }
+            if notifications == nil { notifications = .loadSettings(for: program) }
             return notifications as! T
         case .wallet:
-            if wallet == nil { wallet = .settings(for: program) }
+            if wallet == nil { wallet = .loadSettings(for: program) }
             return wallet as! T
         }
     }

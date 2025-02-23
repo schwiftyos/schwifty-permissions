@@ -16,7 +16,7 @@
 /// This allows overriding a running program's permissions without overriding its default permissions,
 /// which unlocks more granular control over a program and its child processes on a case-by-case basis.
 public actor PermissionStorage : Sendable {
-    /// The shared permission storage.
+    /// Shared permission storage.
     @MainActor public static private(set) var shared:PermissionStorage = PermissionStorage()
 
     @usableFromInline
@@ -36,6 +36,7 @@ public actor PermissionStorage : Sendable {
 
 // MARK: Processes
 extension PermissionStorage {
+    /// - Returns: Permissions for a process.
     @inlinable
     public func permissions(for process: Program.ProcessID) -> ProcessPermissions {
         if let cached:ProcessPermissions = processes[process] {
@@ -62,6 +63,7 @@ extension PermissionStorage {
 
 // MARK: Programs
 extension PermissionStorage {
+    /// - Returns: Permissions for a program.
     @inlinable
     public func permissions(for program: Program) -> ProcessPermissions {
         if let cached:ProcessPermissions = processes[program.pid] ?? programs[program.applicationID] {

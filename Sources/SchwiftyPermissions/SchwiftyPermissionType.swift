@@ -5,7 +5,7 @@
 //  Created by Evan Anderson on 2/6/25.
 //
 
-/// List of permissions that control how programs can behave.
+/// List of permissions that control how processes can behave.
 public enum SchwiftyPermissionType : Sendable {
     /*// MARK: general
 

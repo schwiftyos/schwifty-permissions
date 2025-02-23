@@ -12,7 +12,7 @@ public struct Program : Sendable {
 	public let applicationID:ApplicationID
 	public let pid:ProcessID
 
-	/// The process owner.
+	/// Process owner.
 	/// 
 	/// - Warning: All programs are minimally owned by the root process
 	public private(set) var ownerpid:ProcessID
@@ -52,11 +52,16 @@ extension Program : Hashable {
 
 // MARK: Permissions
 extension Program {
+	/// Request the use of a permission.
+	/// 
+	/// - Parameters:
+	///   - permission: Permission you want to request.
+	///   - reason: Reason why the program is requesting the permission.
 	@inlinable
 	public func request<T: SchwiftyPermission>(
 		_ permission: SchwiftyPermissionType,
 		reason: String
-	) async throws -> Result<T, PermissionError> {
+	) async -> Result<T, PermissionError> {
 		return await PermissionStorage.shared.permissions(for: self).request(permission, for: self, reason: reason)
 	}
 }

@@ -20,6 +20,7 @@ public enum ProgramState : Hashable, Sendable {
 }
 
 extension ProgramState {
+    /// Whether or not this program state allows the use of a permission, given its status.
     @inlinable
     public func allowsPermissionStatus(_ status: PermissionStatus) -> Bool {
         switch status {
