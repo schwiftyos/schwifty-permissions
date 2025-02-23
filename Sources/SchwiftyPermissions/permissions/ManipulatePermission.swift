@@ -11,39 +11,41 @@ public struct ManipulatePermission : SchwiftyPermission {
 
     public private(set) var status:PermissionStatus
 
-    /// - Usage: [`Program`]
-    var programs:[Program]
+    /// - Usage: [`Process ID` : `Manipulation Permissions for the process`]
+    var process:[SchwiftyPermissions.Program.ProcessID:Process]
+    
+    /// - Usage: [`Program Application ID` : `Manipulation Permissions for the program`]
+    var programs:[SchwiftyPermissions.Program.ApplicationID:Process]
 }
 
 // MARK: Default
 extension ManipulatePermission {
     public static let `default`:Self = Self(
         status: .never,
-        programs: []
+        process: [:],
+        programs: [:]
     )
 }
 
-// MARK: Program
+// MARK: Process
 extension ManipulatePermission {
-    /// Permissions for a program that can be manipulated.
-    public struct Program : Hashable, Sendable {
+    /// Permissions for a process that can be manipulated.
+    public struct Process : Hashable, Sendable {
         @usableFromInline
-        var permissions:UInt8
+        var permissions:Permission.RawValue
     }
 }
 
-extension ManipulatePermission.Program {
-    /// Whether or not the program with program manipulation permission can change permissions
-    /// of a program it has access to manipulate.
-    @inlinable
-    public var canChangePermissions : Bool {
-        permissions & 0b1 != 0
+extension ManipulatePermission.Process {
+    public enum Permission : UInt8, Sendable {
+        /// Whether or not user interaction is required if the
+        /// manipulating process wants to change permissions
+        /// of a process it has access to manipulate.
+        case changePermissionsWithoutUserInteraction = 1
     }
-    
-    /// Whether or not the program with program manipulation permission can change permissions
-    /// of a program it has access to manipulate without user interaction.
+
     @inlinable
-    public var canChangePermissionsWithoutUserInteraction : Bool {
-        permissions & 0b01 != 0
+    public func hasPermission(to permission: Permission) -> Bool {
+        return permissions & permission.rawValue != 0
     }
 }
