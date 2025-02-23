@@ -40,23 +40,3 @@ public enum PermissionStatus : Hashable, Sendable {
     /// Access is only allowed temporarily, between two given times of day.
     //case temporarilyBetween(Double, Double) // TODO: support
 }
-
-extension PermissionStatus {
-    @inlinable
-    public func isAllowed(for state: ProgramState) -> Bool {
-        switch self {
-        case .never: return false
-        case .always: return true
-        case .onlyInUse: return state != .notRunning
-        case .onlyInBackground: return state == .background
-        case .onlyInForeground: return state == .foreground
-        case .uponRequest: return true // TODO: fix
-
-        #if canImport(FoundationEssentials) || canImport(Foundation)
-        case .temporarilyUntil(let expires): return Date.now <= expires
-        #endif
-
-        @unknown default: return false
-        }
-    }
-}

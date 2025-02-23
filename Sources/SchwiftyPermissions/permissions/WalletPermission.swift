@@ -5,14 +5,17 @@
 //  Created by Evan Anderson on 2/17/25.
 //
 
+// TODO: fix (Module [Foundation, FoundationEssentials] was not compiled with library evolution support; using it means binary compatibility for 'SchwiftyPermissions' can't be guaranteed)
 #if canImport(FoundationEssentials)
-import FoundationEssentials // TODO: fix
+import FoundationEssentials
 #elseif canImport(Foundation)
-import Foundation // TODO: fix
+import Foundation
 #endif
 
 /// Wallet permissions for a program.
 public struct WalletPermission : SchwiftyPermission {
+    public static let permissionType:SchwiftyPermissionType = .wallet
+
     public private(set) var status:PermissionStatus
 
 #if canImport(FoundationEssentials) || canImport(Foundation)

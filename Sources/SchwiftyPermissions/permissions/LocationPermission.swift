@@ -7,6 +7,8 @@
 
 /// Location permissions for a program.
 public struct LocationPermission : SchwiftyPermission {
+    public static let permissionType:SchwiftyPermissionType = .location
+
     public private(set) var status:PermissionStatus
 
     public private(set) var accuracy:Accuracy

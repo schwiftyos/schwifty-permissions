@@ -6,10 +6,8 @@
 //
 
 /// Permissions for a process.
-public struct ProcessPermissions : Sendable {
-    var state:ProgramState
-
-    var calendar:CalendarPermission!
+public final class ProcessPermissions : @unchecked Sendable {
+    var calendar:CalendarPermission! = nil
     var disk:DiskPermission! = nil
     var location:LocationPermission! = nil
     var manipulation:ManipulatePermission! = nil
@@ -17,45 +15,60 @@ public struct ProcessPermissions : Sendable {
     var notifications:NotificationPermission! = nil
     var wallet:WalletPermission! = nil
 
-    /*public mutating func get(
-        for permission: SchwiftyPermission,
-        onBehalfOf pid: UInt64,
+    @usableFromInline
+    init() {
+    }
+}
+
+// MARK: Program
+extension ProcessPermissions {
+	@inlinable
+    public func request<T: SchwiftyPermission>(
+        _ permission: SchwiftyPermissionType,
+        for program: Program,
         reason: String
-    ) async -> AnyPermissionSnapshot {
-        switch permission {
+    ) -> Result<T, PermissionError> {
+        let perm:T = getOrLoad(permission, for: program)
+        guard program.state.allowsPermissionStatus(perm.status) else {
+            return .failure(.operationDenied)
+        }
+        switch perm.status {
+        case .uponRequest:
+            // TODO: add UI prompt (if necessary)
+            break
         default:
-            return PermissionSnapshot(status: .never, data: Empty())
+            break
         }
+        return .success(perm)
     }
 
-    public mutating func status(
-        for permission: SchwiftyPermission,
-        onBehalfOf pid: UInt64,
-        reason: String
-    ) async -> PermissionStatus {
-        return await get(for: permission, onBehalfOf: pid, reason: reason).status
-    }
-    
-    mutating func requestPermission<T: SchwiftyPermission>(
-        _ permission: T,
-        onBehalfOf pid: UInt64,
-        reason: String
-    ) async -> Bool {
-        if let result:UInt8 = await promptPermission(permission, pid: pid, reason: reason), let p:PermissionStatus = PermissionStatus(rawValue: result) {
-            // TODO: finish
-            return PermissionSnapshot(status: p, data: T())
+	@usableFromInline
+    func getOrLoad<T: SchwiftyPermission>(
+        _ permission: SchwiftyPermissionType,
+        for program: Program
+    ) -> T {
+        switch permission {
+        case .calendar:
+            if calendar == nil { calendar = .settings(for: program) }
+            return calendar as! T
+        case .disk:
+            if disk == nil { disk = .settings(for: program) }
+            return disk as! T
+        case .location:
+            if location == nil { location = .settings(for: program) }
+            return location as! T
+        case .manipulation:
+            if manipulation == nil { manipulation = .settings(for: program) }
+            return manipulation as! T
+        case .network:
+            if network == nil { network = .settings(for: program) }
+            return network as! T
+        case .notification:
+            if notifications == nil { notifications = .settings(for: program) }
+            return notifications as! T
+        case .wallet:
+            if wallet == nil { wallet = .settings(for: program) }
+            return wallet as! T
         }
-        return PermissionSnapshot(status: .never, data: T())
-    }*/
-
-
-    /// - Returns: The selected Permission Status code.
-    func promptPermission(
-        _ permission: SchwiftyPermission,
-        pid: UInt64,
-        reason: String
-    ) async -> UInt8? {
-        // TODO: add UI prompt and completion handler callback
-        return nil
     }
 }

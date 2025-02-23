@@ -7,6 +7,8 @@
 
 /// Network permissions for a program.
 public struct NetworkPermission : SchwiftyPermission {
+    public static let permissionType:SchwiftyPermissionType = .network
+
     public private(set) var status:PermissionStatus
 
     /// URLs the program is allowed to contact.

@@ -7,7 +7,7 @@
 
 /// List of permissions that control how programs can behave.
 public enum SchwiftyPermissionType : Sendable {
-    // MARK: general
+    /*// MARK: general
 
     /// Read the system's audio output.
     case audioRead
@@ -51,5 +51,14 @@ public enum SchwiftyPermissionType : Sendable {
     case passkeys
     case passwords
     case photos
-    case reminders
+    case reminders*/
+
+    // MARK: Implemented
+    case calendar
+    case disk
+    case location
+    case manipulation
+    case network
+    case notification
+    case wallet
 }

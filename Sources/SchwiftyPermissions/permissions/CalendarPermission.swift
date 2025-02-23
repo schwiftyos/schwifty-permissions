@@ -7,6 +7,8 @@
 
 /// Calendar permissions for a program.
 public struct CalendarPermission : SchwiftyPermission {
+    public static let permissionType:SchwiftyPermissionType = .calendar
+    
     public private(set) var status:PermissionStatus
 
     @usableFromInline
