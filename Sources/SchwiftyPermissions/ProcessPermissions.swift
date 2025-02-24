@@ -22,7 +22,7 @@ public final class ProcessPermissions : @unchecked Sendable {
 
 // MARK: Program
 extension ProcessPermissions {
-	@inlinable
+    @inlinable
     public func request<T: SchwiftyPermission>(
         _ permission: SchwiftyPermissionType,
         for program: Program,
@@ -42,7 +42,7 @@ extension ProcessPermissions {
         return .success(perm)
     }
 
-	@usableFromInline
+    @usableFromInline
     func getOrLoad<T: SchwiftyPermission>(
         _ permission: SchwiftyPermissionType,
         for program: Program
