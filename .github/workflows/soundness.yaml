@@ -34,7 +34,7 @@ on:
       license_header_check_enabled:
         type: boolean
         description: "Boolean to enable the license header check job. Defaults to true."
-        default: true
+        default: false
       license_header_check_project_name:
         type: string
         description: "Name of the project called out in the license header."
