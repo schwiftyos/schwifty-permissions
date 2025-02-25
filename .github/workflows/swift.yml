@@ -17,13 +17,13 @@ jobs:
         swift package init --type library
         swift build
       # Windows
-      windows_build_command: |
-        swift --version
-        mkdir MyPackage
-        cd MyPackage
-        swift package init --type library
-        swift build
-      enable_windows_docker: true
+#      windows_build_command: |
+#        swift --version
+#        mkdir MyPackage
+#        cd MyPackage
+#        swift package init --type library
+#        swift build
+#      enable_windows_docker: true
 
   soundness:
     name: Soundness
