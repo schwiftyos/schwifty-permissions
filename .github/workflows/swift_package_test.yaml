@@ -152,7 +152,7 @@ jobs:
           . $env:TEMP\install-swift-${{ matrix.swift_version }}.ps1
           del $env:TEMP\install-swift*.ps1
       - name: Create test script
-          run: |
+        run: |
             mkdir $env:TEMP\test-script
             echo @'
             Set-PSDebug -Trace 1
