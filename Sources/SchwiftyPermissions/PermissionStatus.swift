@@ -20,13 +20,13 @@ public enum PermissionStatus : Hashable, Sendable {
     /// Access is always allowed.
     case always
 
-    /// Access is only allowed when the program is in use (in background or foreground).
+    /// Access is only allowed when the process is in use (in background or foreground).
     case onlyInUse
 
-    /// Access is only allowed when the program is in the background.
+    /// Access is only allowed when the process is in the background.
     case onlyInBackground
 
-    /// Access is only allowed when the program is in the foreground.
+    /// Access is only allowed when the process is in the foreground.
     case onlyInForeground
 
     /// Access is only allowed if granted by the user, when requested.

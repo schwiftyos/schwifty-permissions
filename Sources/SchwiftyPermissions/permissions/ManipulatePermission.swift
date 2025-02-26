@@ -5,7 +5,7 @@
 //  Created by Evan Anderson on 2/17/25.
 //
 
-/// Manipulation permissions for a program.
+/// Manipulation permissions for a process.
 public struct ManipulatePermission : SchwiftyPermission {
     public static let permissionType:SchwiftyPermissionType = .manipulation
 

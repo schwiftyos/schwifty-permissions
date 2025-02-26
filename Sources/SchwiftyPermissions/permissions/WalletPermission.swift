@@ -12,23 +12,23 @@ import FoundationEssentials
 import Foundation
 #endif
 
-/// Wallet permissions for a program.
+/// Wallet permissions for a process.
 public struct WalletPermission : SchwiftyPermission {
     public static let permissionType:SchwiftyPermissionType = .wallet
 
     public private(set) var status:PermissionStatus
 
 #if canImport(FoundationEssentials) || canImport(Foundation)
-    /// The allowed credit cards a program has access to.
+    /// Allowed credit cards a process has access to.
     public private(set) var creditCards:[UUID]
 
-    /// The allowed debit cards a program has access to.
+    /// Allowed debit cards a process has access to.
     public private(set) var debitCards:[UUID]
 #else
-    /// The allowed credit cards a program has access to.
+    /// Allowed credit cards a process has access to.
     public private(set) var creditCards:[UInt64]
 
-    /// The allowed debit cards a program has access to.
+    /// Allowed debit cards a process has access to.
     public private(set) var debitCards:[UInt64]
 #endif
 }

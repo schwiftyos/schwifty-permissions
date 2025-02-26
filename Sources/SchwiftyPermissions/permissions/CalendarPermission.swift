@@ -5,7 +5,7 @@
 //  Created by Evan Anderson on 2/19/25.
 //
 
-/// Calendar permissions for a program.
+/// Calendar permissions for a process.
 public struct CalendarPermission : SchwiftyPermission {
     public static let permissionType:SchwiftyPermissionType = .calendar
     
@@ -29,7 +29,7 @@ extension CalendarPermission {
 
 // MARK: Range
 extension CalendarPermission {
-    /// How far into the future, or past, a program has access to.
+    /// How far into the future, or past, a process has access to.
     public enum Range : Sendable {
         /// Can access all calendar events.
         case unlimited
