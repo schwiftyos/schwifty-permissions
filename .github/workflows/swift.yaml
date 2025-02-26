@@ -1,0 +1,34 @@
+name: Pull request
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  tests_with_docker:
+    name: Test with Docker
+    uses: ./.github/workflows/swift_package_test.yaml
+    with:
+      # Linux
+      linux_build_command: |
+        swift --version
+        mkdir MyPackage
+        cd MyPackage
+        swift package init --type library
+        swift build
+      # Windows
+      windows_build_command: |
+        swift --version
+        mkdir MyPackage
+        cd MyPackage
+        swift package init --type library
+        swift build
+      enable_windows_docker: false
+
+  soundness:
+    name: Soundness
+    uses: ./.github/workflows/soundness.yaml
+    with:
+      api_breakage_check_enabled: false
+      license_header_check_project_name: "SchwiftyOS"
+      format_check_enabled: false
