@@ -59,11 +59,11 @@ on:
       enable_windows_checks:
         type: boolean
         description: "Boolean to enable windows testing. Defaults to true"
-        default: true
+        default: false
       enable_windows_docker:
         type: boolean
         description: "Boolean to enable running build in windows docker container. Defaults to true"
-        default: true
+        default: false
       needs_token:
         type: boolean
         description: "Boolean to enable providing the GITHUB_TOKEN to downstream job."
