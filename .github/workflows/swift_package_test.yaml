@@ -49,7 +49,7 @@ on:
         description: "List of environment variables"
         type: string
       max_runtime:
-        type: integer
+        type: number
         description: "Declares the maximum Runtime of an every action"
         default: 10
       enable_linux_checks:
@@ -153,40 +153,40 @@ jobs:
           del $env:TEMP\install-swift*.ps1
       - name: Create test script
         run: |
-            mkdir $env:TEMP\test-script
-            echo @'
-            Set-PSDebug -Trace 1
-            if ("${{ inputs.enable_windows_docker }}" -eq "true") {
-              $Source = "C:\source"
-            } else {
-              $Source = $env:GITHUB_WORKSPACE
+          mkdir $env:TEMP\test-script
+          echo @'
+          Set-PSDebug -Trace 1
+          if ("${{ inputs.enable_windows_docker }}" -eq "true") {
+            $Source = "C:\source"
+          } else {
+            $Source = $env:GITHUB_WORKSPACE
+          }
+          
+          # Run the command following `Invoke-Program`.
+          # If that command returns a non-zero exit code, return the same exit code from this script.
+          function Invoke-Program($Executable) {
+            & $Executable @args
+              if ($LastExitCode -ne 0) {
+              exit $LastExitCode
             }
-            
-            # Run the command following `Invoke-Program`.
-            # If that command returns a non-zero exit code, return the same exit code from this script.
-            function Invoke-Program($Executable) {
-              & $Executable @args
-                if ($LastExitCode -ne 0) {
-                exit $LastExitCode
-              }
-            }
-            Invoke-Program swift --version
-            Invoke-Program swift test --version
-            Invoke-Program cd $Source
-            ${{ inputs.windows_pre_build_command }}
-            Invoke-Program ${{ inputs.windows_build_command }} ${{ (contains(matrix.swift_version, 'nightly') && inputs.swift_nightly_flags) || inputs.swift_flags }}
-            '@ >> $env:TEMP\test-script\run.ps1
+          }
+          Invoke-Program swift --version
+          Invoke-Program swift test --version
+          Invoke-Program cd $Source
+          ${{ inputs.windows_pre_build_command }}
+          Invoke-Program ${{ inputs.windows_build_command }} ${{ (contains(matrix.swift_version, 'nightly') && inputs.swift_nightly_flags) || inputs.swift_flags }}
+          '@ >> $env:TEMP\test-script\run.ps1
         # Docker build
-        - name: Docker Build / Test
-          timeout-minutes: ${{ inputs.max_runtime }}
-          if: ${{ inputs.enable_windows_docker }}
-          run: |
-            docker run -v ${{ github.workspace }}:C:\source -v $env:TEMP\test-script:C:\test-script ${{ steps.pull_docker_image.outputs.image }} powershell.exe -NoLogo -File C:\test-script\run.ps1
+      - name: Docker Build / Test
+        timeout-minutes: ${{ inputs.max_runtime }}
+        if: ${{ inputs.enable_windows_docker }}
+        run: |
+          docker run -v ${{ github.workspace }}:C:\source -v $env:TEMP\test-script:C:\test-script ${{ steps.pull_docker_image.outputs.image }} powershell.exe -NoLogo -File C:\test-script\run.ps1
         # Docker-less build
-        - name: Build / Test
-          timeout-minutes: ${{ inputs.max_runtime }}
-          if: ${{ !inputs.enable_windows_docker }}
-          run: |
-            Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
-            RefreshEnv
-            powershell.exe -NoLogo -File $env:TEMP\test-script\run.ps1; exit $LastExitCode
+      - name: Build / Test
+        timeout-minutes: ${{ inputs.max_runtime }}
+        if: ${{ !inputs.enable_windows_docker }}
+        run: |
+          Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+          RefreshEnv
+          powershell.exe -NoLogo -File $env:TEMP\test-script\run.ps1; exit $LastExitCode
