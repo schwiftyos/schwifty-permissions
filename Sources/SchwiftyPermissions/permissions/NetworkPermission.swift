@@ -17,6 +17,12 @@ public struct NetworkPermission : SchwiftyPermission {
     /// URLs the program is not allowed to contact.
     public private(set) var urlBlacklist:Set<String>
 
+    /// Number of kilobytes per second this program is allowed to download.
+    public private(set) var downloadBandwidthLimit:UInt64
+
+    /// Number of kilobytes per second this program is allowed to upload.
+    public private(set) var uploadBandwidthLimit:UInt64
+
     @usableFromInline
     var downloadPermissions:ConnectionType.RawValue
 
@@ -30,6 +36,8 @@ extension NetworkPermission {
         status: .uponRequest,
         urlWhitelist: [],
         urlBlacklist: [],
+        downloadBandwidthLimit: .max,
+        uploadBandwidthLimit: .max,
         downloadPermissions: .max,
         uploadPermissions: .max
     )
