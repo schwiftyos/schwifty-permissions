@@ -161,7 +161,7 @@ jobs:
           } else {
             $Source = $env:GITHUB_WORKSPACE
           }
-          
+
           # Run the command following `Invoke-Program`.
           # If that command returns a non-zero exit code, return the same exit code from this script.
           function Invoke-Program($Executable) {
