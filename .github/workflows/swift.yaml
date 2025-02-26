@@ -23,7 +23,7 @@ jobs:
         cd MyPackage
         swift package init --type library
         swift build
-        enable_windows_docker: false
+      enable_windows_docker: false
 
   soundness:
     name: Soundness
