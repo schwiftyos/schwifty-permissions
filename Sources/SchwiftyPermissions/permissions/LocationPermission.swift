@@ -5,7 +5,7 @@
 //  Created by Evan Anderson on 2/17/25.
 //
 
-/// Location permissions for a program.
+/// Location permissions for a process.
 public struct LocationPermission : SchwiftyPermission {
     public static let permissionType:SchwiftyPermissionType = .location
 

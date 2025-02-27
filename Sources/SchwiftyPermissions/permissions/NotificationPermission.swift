@@ -5,7 +5,7 @@
 //  Created by Evan Anderson on 2/17/25.
 //
 
-/// Notification permissions for a program.
+/// Notification permissions for a process.
 public struct NotificationPermission : SchwiftyPermission {
     public static let permissionType:SchwiftyPermissionType = .notification
 

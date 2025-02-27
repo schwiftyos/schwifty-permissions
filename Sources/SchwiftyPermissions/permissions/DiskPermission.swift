@@ -5,22 +5,22 @@
 //  Created by Evan Anderson on 2/17/25.
 //
 
-/// Disk permissions for a program.
+/// Disk permissions for a process.
 public struct DiskPermission : SchwiftyPermission {
     public static let permissionType:SchwiftyPermissionType = .disk
 
     public private(set) var status:PermissionStatus
 
-    /// Absolute paths the program can read.
+    /// Absolute paths the process can read.
     public private(set) var pathReadWhitelist:Set<String>
 
-    /// Absolute paths the program cannot read.
+    /// Absolute paths the process cannot read.
     public private(set) var pathReadBlacklist:Set<String>
 
-    /// Absolute paths the program can write to.
+    /// Absolute paths the process can write to.
     public private(set) var pathWriteWhitelist:Set<String>
 
-    /// Absolute paths the program cannot write to.
+    /// Absolute paths the process cannot write to.
     public private(set) var pathWriteBlacklist:Set<String>
 
     @usableFromInline
@@ -63,7 +63,7 @@ extension DiskPermission {
 
 // MARK: Read
 extension DiskPermission {
-    /// Whether or not a program can read from the disk.
+    /// Whether or not a process can read from the disk.
     @inlinable
     public var canRead : Bool {
         permissions & 0b1 != 0
@@ -72,7 +72,7 @@ extension DiskPermission {
 
 // MARK: Write
 extension DiskPermission {
-    /// Whether or not a program can write to the disk.
+    /// Whether or not a process can write to the disk.
     @inlinable
     public var canWrite : Bool {
         permissions & 0b01 != 0
