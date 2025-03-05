@@ -41,7 +41,7 @@ public struct NetworkQuota : Sendable {
 extension NetworkPermission {
     /// - Returns: The `NetworkQuota` for a `ConnectionType`.
     @inlinable
-    public func quota(for connection: ConnectionType) async -> NetworkQuota? {
+    public func quota(for connection: ConnectionType) -> NetworkQuota? {
         switch connection {
         case .local: return quotas?.local
         case .wired: return quotas?.wired
@@ -53,11 +53,11 @@ extension NetworkPermission {
         }
     }
 
-    /// - Returns: The active `NetworkQuota` for a `connectionType`.
+    /// - Returns: The active `NetworkQuota` for a `ConnectionType`.
     /// Defaults to the system network quota for the connection type, if configured.
     @inlinable
     public func activeQuota(for connection: ConnectionType) async -> NetworkQuota? {
-        var quota = await quota(for: connection)
+        var quota = quota(for: connection)
         if quota == nil {
             quota = await PermissionStorage.shared.system.network.quota(for: connection)
         }

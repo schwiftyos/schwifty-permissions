@@ -25,8 +25,8 @@ public struct NetworkPermission : SchwiftyPermission {
     /// URLs the process is not allowed to contact.
     public private(set) var urlBlacklist:Set<String>
 
-    /// Number of bytes per second allowed to download/upload for this process.
-    public private(set) var bandwidthLimitPerSecond:BandwidthLimit?
+    /// Network bandwidth limits for connection types.
+    public private(set) var bandwidthLimits:BandwidthLimits?
 
     /// Network quotas for connection types.
     public private(set) var quotas:Quotas?
@@ -44,7 +44,8 @@ extension NetworkPermission {
         status: .uponRequest,
         urlWhitelist: [],
         urlBlacklist: [],
-        bandwidthLimitPerSecond: nil,
+        bandwidthLimits: nil,
+        quotas: nil,
         downloadPermissions: .max,
         uploadPermissions: .max
     )
@@ -70,6 +71,17 @@ extension NetworkPermission {
         public private(set) var hotspot:NetworkQuota?
         public private(set) var cellular:NetworkQuota?
         public private(set) var vpn:NetworkQuota?
+    }
+}
+// MARK: BandwidthLimits
+extension NetworkPermission {
+    public struct BandwidthLimits : Sendable {
+        public private(set) var local:NetworkBandwidthLimit?
+        public private(set) var wired:NetworkBandwidthLimit?
+        public private(set) var wireless:NetworkBandwidthLimit?
+        public private(set) var hotspot:NetworkBandwidthLimit?
+        public private(set) var cellular:NetworkBandwidthLimit?
+        public private(set) var vpn:NetworkBandwidthLimit?
     }
 }
 
@@ -100,17 +112,5 @@ extension NetworkPermission {
     @inlinable
     public func canUpload(to url: String, over connection: ConnectionType) -> Bool {
         return canUpload(over: connection) && (urlWhitelist.isEmpty || urlWhitelist.contains(url)) && !urlBlacklist.contains(url)
-    }
-}
-
-// MARK: Bandwidth
-extension NetworkPermission {
-    /// Network bandwidth limits.
-    public struct BandwidthLimit : Sendable {
-        /// Number of bytes allowed to download.
-        public private(set) var download:BinaryUnit
-
-        /// Number of bytes allowed to upload.
-        public private(set) var upload:BinaryUnit
     }
 }
