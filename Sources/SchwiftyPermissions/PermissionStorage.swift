@@ -19,19 +19,15 @@ public actor PermissionStorage : Sendable {
     /// Shared permission storage.
     @MainActor public static private(set) var shared:PermissionStorage = PermissionStorage()
 
-    var _system:ProcessPermissions!
+    var _system:SystemPermissions!
 
     /// System-wide permissions that take priority over process and program permissions.
-    public private(set) var system : ProcessPermissions {
+    public private(set) var system : SystemPermissions {
         get {
-            if _system == nil {
-                _system = ProcessPermissions()
-            }
+            if _system == nil { _system = SystemPermissions() }
             return _system
         }
-        set {
-            _system = newValue
-        }
+        set { _system = newValue }
     }
 
     @usableFromInline
@@ -41,7 +37,7 @@ public actor PermissionStorage : Sendable {
     var processes:[Program.ProcessID:ProcessPermissions]
 
     public init(
-        system: ProcessPermissions? = nil
+        system: SystemPermissions? = nil
     ) {
         self._system = system
         programs = [:]

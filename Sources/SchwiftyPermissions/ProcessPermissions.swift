@@ -7,13 +7,13 @@
 
 /// Permissions for a process.
 public final class ProcessPermissions : @unchecked Sendable {
-    var calendar:CalendarPermission! = nil
-    var disk:DiskPermission! = nil
-    var location:LocationPermission! = nil
-    var manipulation:ManipulatePermission! = nil
-    var network:NetworkPermission! = nil
-    var notifications:NotificationPermission! = nil
-    var wallet:WalletPermission! = nil
+    var _calendar:CalendarPermission! = nil
+    var _disk:DiskPermission! = nil
+    var _location:LocationPermission! = nil
+    var _manipulation:ManipulatePermission! = nil
+    var _network:NetworkPermission! = nil
+    var _notifications:NotificationPermission! = nil
+    var _wallet:WalletPermission! = nil
 
     @usableFromInline
     init() {
@@ -26,7 +26,7 @@ extension ProcessPermissions {
     public func request<T: SchwiftyPermission>(
         _ permission: SchwiftyPermissionType,
         for program: Program,
-        reason: String
+        reason: String = "Unspecified"
     ) -> Result<T, PermissionError> {
         let perm:T = getOrLoad(permission, for: program)
         guard program.state.allowsPermissionStatus(perm.status) else {
@@ -49,26 +49,26 @@ extension ProcessPermissions {
     ) -> T {
         switch permission {
         case .calendar:
-            if calendar == nil { calendar = .loadSettings(for: program) }
-            return calendar as! T
+            if _calendar == nil { _calendar = .loadSettings(for: program) }
+            return _calendar as! T
         case .disk:
-            if disk == nil { disk = .loadSettings(for: program) }
-            return disk as! T
+            if _disk == nil { _disk = .loadSettings(for: program) }
+            return _disk as! T
         case .location:
-            if location == nil { location = .loadSettings(for: program) }
-            return location as! T
+            if _location == nil { _location = .loadSettings(for: program) }
+            return _location as! T
         case .manipulation:
-            if manipulation == nil { manipulation = .loadSettings(for: program) }
-            return manipulation as! T
+            if _manipulation == nil { _manipulation = .loadSettings(for: program) }
+            return _manipulation as! T
         case .network:
-            if network == nil { network = .loadSettings(for: program) }
-            return network as! T
+            if _network == nil { _network = .loadSettings(for: program) }
+            return _network as! T
         case .notification:
-            if notifications == nil { notifications = .loadSettings(for: program) }
-            return notifications as! T
+            if _notifications == nil { _notifications = .loadSettings(for: program) }
+            return _notifications as! T
         case .wallet:
-            if wallet == nil { wallet = .loadSettings(for: program) }
-            return wallet as! T
+            if _wallet == nil { _wallet = .loadSettings(for: program) }
+            return _wallet as! T
         }
     }
 }

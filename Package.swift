@@ -14,11 +14,15 @@ let package = Package(
     ],
     dependencies: [
         // TODO: add logging library
+        // Schwifty Utilities
+        .package(url: "https://github.com/schwiftyos/schwifty-utilities", branch: "main")
     ],
     targets: [
         .target(
             name: "SchwiftyPermissions",
-            dependencies: [],
+            dependencies: [
+                .product(name: "SchwiftyUtilities", package: "schwifty-utilities")
+            ],
             swiftSettings: [
                 .unsafeFlags(["-enable-library-evolution"])
             ]

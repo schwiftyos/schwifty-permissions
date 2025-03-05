@@ -11,6 +11,8 @@ import FoundationEssentials
 import Foundation
 #endif
 
+import SchwiftyUtilities
+
 /// Network permissions for a process.
 public struct NetworkPermission : SchwiftyPermission {
     public static let permissionType:SchwiftyPermissionType = .network
@@ -26,8 +28,8 @@ public struct NetworkPermission : SchwiftyPermission {
     /// Number of bytes per second allowed to download/upload for this process.
     public private(set) var bandwidthLimitPerSecond:BandwidthLimit?
 
-    /// Number of bytes this process is allowed to download/upload for a period of time.
-    public private(set) var quota:Quota?
+    /// Network quotas for connection types.
+    public private(set) var quotas:Quotas?
 
     @usableFromInline
     var downloadPermissions:ConnectionType.RawValue
@@ -57,6 +59,17 @@ extension NetworkPermission {
         case hotspot  = 8
         case cellular = 16
         case vpn      = 32
+    }
+}
+// MARK: Quotas
+extension NetworkPermission {
+    public struct Quotas : Sendable {
+        public private(set) var local:NetworkQuota?
+        public private(set) var wired:NetworkQuota?
+        public private(set) var wireless:NetworkQuota?
+        public private(set) var hotspot:NetworkQuota?
+        public private(set) var cellular:NetworkQuota?
+        public private(set) var vpn:NetworkQuota?
     }
 }
 
@@ -95,34 +108,9 @@ extension NetworkPermission {
     /// Network bandwidth limits.
     public struct BandwidthLimit : Sendable {
         /// Number of bytes allowed to download.
-        public private(set) var download:UInt64
+        public private(set) var download:BinaryUnit
 
         /// Number of bytes allowed to upload.
-        public private(set) var upload:UInt64
-    }
-}
-
-// MARK: Quota
-extension NetworkPermission {
-    public struct Quota : Sendable {
-        #if canImport(FoundationEssentials) || canImport(Foundation)
-        /// When tracking of the quota begins.
-        public private(set) var starts:Date
-
-        /// When tracking of the quota ends.
-        public private(set) var ends:Date
-        #endif
-
-        /// Number of bytes allowed to download.
-        public private(set) var download:UInt64
-
-        /// Current number of bytes downloaded.
-        public private(set) var downloaded:UInt64
-
-        /// Number of bytes allowed to upload.
-        public private(set) var upload:UInt64
-
-        /// Current number of bytes uploaded.
-        public private(set) var uploaded:UInt64        
+        public private(set) var upload:BinaryUnit
     }
 }
