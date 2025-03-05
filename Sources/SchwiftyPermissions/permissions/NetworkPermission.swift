@@ -5,6 +5,12 @@
 //  Created by Evan Anderson on 2/17/25.
 //
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#elseif canImport(Foundation)
+import Foundation
+#endif
+
 /// Network permissions for a process.
 public struct NetworkPermission : SchwiftyPermission {
     public static let permissionType:SchwiftyPermissionType = .network
@@ -17,11 +23,11 @@ public struct NetworkPermission : SchwiftyPermission {
     /// URLs the process is not allowed to contact.
     public private(set) var urlBlacklist:Set<String>
 
-    /// Number of kilobytes per second this process is allowed to download.
-    public private(set) var downloadBandwidthLimit:UInt64
+    /// Number of bytes per second allowed to download/upload for this process.
+    public private(set) var bandwidthLimitPerSecond:BandwidthLimit?
 
-    /// Number of kilobytes per second this process is allowed to upload.
-    public private(set) var uploadBandwidthLimit:UInt64
+    /// Number of bytes this process is allowed to download/upload for a period of time.
+    public private(set) var quota:Quota?
 
     @usableFromInline
     var downloadPermissions:ConnectionType.RawValue
@@ -36,8 +42,7 @@ extension NetworkPermission {
         status: .uponRequest,
         urlWhitelist: [],
         urlBlacklist: [],
-        downloadBandwidthLimit: .max,
-        uploadBandwidthLimit: .max,
+        bandwidthLimitPerSecond: nil,
         downloadPermissions: .max,
         uploadPermissions: .max
     )
@@ -70,7 +75,7 @@ extension NetworkPermission {
     }
 }
 
-// MARK: Update
+// MARK: Upload
 extension NetworkPermission {
     /// Whether or not a process can upload data over the specified connection.
     @inlinable
@@ -82,5 +87,42 @@ extension NetworkPermission {
     @inlinable
     public func canUpload(to url: String, over connection: ConnectionType) -> Bool {
         return canUpload(over: connection) && (urlWhitelist.isEmpty || urlWhitelist.contains(url)) && !urlBlacklist.contains(url)
+    }
+}
+
+// MARK: Bandwidth
+extension NetworkPermission {
+    /// Network bandwidth limits.
+    public struct BandwidthLimit : Sendable {
+        /// Number of bytes allowed to download.
+        public private(set) var download:UInt64
+
+        /// Number of bytes allowed to upload.
+        public private(set) var upload:UInt64
+    }
+}
+
+// MARK: Quota
+extension NetworkPermission {
+    public struct Quota : Sendable {
+        #if canImport(FoundationEssentials) || canImport(Foundation)
+        /// When tracking of the quota begins.
+        public private(set) var starts:Date
+
+        /// When tracking of the quota ends.
+        public private(set) var ends:Date
+        #endif
+
+        /// Number of bytes allowed to download.
+        public private(set) var download:UInt64
+
+        /// Current number of bytes downloaded.
+        public private(set) var downloaded:UInt64
+
+        /// Number of bytes allowed to upload.
+        public private(set) var upload:UInt64
+
+        /// Current number of bytes uploaded.
+        public private(set) var uploaded:UInt64        
     }
 }

@@ -19,13 +19,31 @@ public actor PermissionStorage : Sendable {
     /// Shared permission storage.
     @MainActor public static private(set) var shared:PermissionStorage = PermissionStorage()
 
+    var _system:ProcessPermissions!
+
+    /// System-wide permissions that take priority over process and program permissions.
+    public private(set) var system : ProcessPermissions {
+        get {
+            if _system == nil {
+                _system = ProcessPermissions()
+            }
+            return _system
+        }
+        set {
+            _system = newValue
+        }
+    }
+
     @usableFromInline
     var programs:[Program.ApplicationID:ProcessPermissions]
 
     @usableFromInline
     var processes:[Program.ProcessID:ProcessPermissions]
 
-    public init() {
+    public init(
+        system: ProcessPermissions? = nil
+    ) {
+        self._system = system
         programs = [:]
         processes = [:]
     }
@@ -39,7 +57,7 @@ extension PermissionStorage {
     /// - Returns: Permissions for a process.
     @inlinable
     public func permissions(for process: Program.ProcessID) -> ProcessPermissions {
-        if let cached:ProcessPermissions = processes[process] {
+        if let cached = processes[process] {
             return cached
         }
         let value:ProcessPermissions = ProcessPermissions()
@@ -66,7 +84,7 @@ extension PermissionStorage {
     /// - Returns: Permissions for a program.
     @inlinable
     public func permissions(for program: Program) -> ProcessPermissions {
-        if let cached:ProcessPermissions = processes[program.pid] ?? programs[program.applicationID] {
+        if let cached = processes[program.pid] ?? programs[program.applicationID] {
             return cached
         }
         let value:ProcessPermissions = ProcessPermissions()
