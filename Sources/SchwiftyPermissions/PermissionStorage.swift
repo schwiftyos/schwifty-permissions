@@ -9,12 +9,13 @@
 /// 
 /// ## Permissions
 /// 
-/// We support two independent kinds of permissions:
+/// We support 3 independent kinds of permissions:
+///   - system-wide (default)
 ///   - per process
-///   - per program (default)
+///   - per program
 /// 
-/// This allows overriding a running program's permissions without overriding its default permissions,
-/// which unlocks more granular control over a program and its child processes on a case-by-case basis.
+/// This allows overriding a running process's permissions without overriding its inherited permissions,
+/// which unlocks more granular control over processes and programs on a case-by-case basis.
 public actor PermissionStorage : Sendable {
     /// Shared permission storage.
     @MainActor public static private(set) var shared:PermissionStorage = PermissionStorage()
