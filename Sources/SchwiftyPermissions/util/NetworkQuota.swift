@@ -64,7 +64,7 @@ extension NetworkPermission {
         #if canImport(FoundationEssentials) || canImport(Foundation)
         if let quota {
             let now:Date = Date.now()
-            guard now >= quota.starts && now <= quota.ends else { return nil }
+            guard now >= quota.starts && now < quota.ends else { return nil }
         }
         #endif
         return quota
