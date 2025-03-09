@@ -5,9 +5,3 @@
 //
 // See https://github.com/schwiftyos/schwifty-permissions/LICENSE.txt for license information
 // See https://github.com/schwiftyos/schwifty-permissions/CONTRIBUTORS.txt for the list of Schwifty Permissions project authors
-
-import Testing
-@testable import SchwiftyPermissions
-
-@Test func example() async throws {
-}
