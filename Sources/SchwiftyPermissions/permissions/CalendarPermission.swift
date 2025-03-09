@@ -1,9 +1,10 @@
+// This source file is part of the Schwifty Permissions open source project
 //
-//  CalendarPermission.swift
+// Copyright (c) 2025 Evan Anderson and the Schwifty Permissions project authors
+// Licensed under Apache License v2.0 with Runtime Library Exception
 //
-//
-//  Created by Evan Anderson on 2/19/25.
-//
+// See https://github.com/schwiftyos/schwifty-permissions/LICENSE.txt for license information
+// See https://github.com/schwiftyos/schwifty-permissions/CONTRIBUTORS.txt for the list of Schwifty Permissions project authors
 
 /// Calendar permissions for a process.
 public struct CalendarPermission : SchwiftyPermission {

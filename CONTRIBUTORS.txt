@@ -1,0 +1,22 @@
+For the purpose of tracking copyright, this is the list of individuals and
+organizations who have contributed source code to Schwifty Permissions.
+
+For employees of an organization/company where the copyright of work done
+by employees of that company is held by the company itself, only the company
+needs to be listed here.
+
+## COPYRIGHT HOLDERS
+
+- Evan Anderson <imrandomhashtags@gmail.com> <imrandomhashtags@proton.me>
+
+
+### Auto-populated List
+
+Names below this line are automatically generated from the repository logs of
+the Schwifty Permissions open source project at https://github.com/schwiftyos/schwifty-permissions.
+It contains the information about the committer that was publicly present
+when the commit was made, and merges duplicate entries into one line per person.
+If your name or email has been incorrectly merged, please open a pull request
+with a change to the .mailmap file.
+
+- MinerMinerMods <81445535+MinerMinerMods@users.noreply.github.com>
