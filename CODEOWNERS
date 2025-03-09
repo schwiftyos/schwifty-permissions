@@ -1,15 +1,1 @@
-# Claim rights to all workflows
-/.github @schwiftyos/technical-managers
-**.yml @schwiftyos/technical-managers
-**.yaml @schwiftyos/technical-managers
-
-# Claim rights to all Unix hidden files
-.** @schwiftyos/technical-managers
 * @schwiftyos/technical-managers
-
-
-# Claim Build Settings
-Package.swift @schwiftyos/technical-managers
-
-# Individual Claims
-Sources/SchwiftyPermissions/Program.swift @MinerMinerMods
