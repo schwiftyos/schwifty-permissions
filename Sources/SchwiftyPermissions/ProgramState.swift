@@ -12,6 +12,8 @@ import FoundationEssentials
 import Foundation
 #endif
 
+import SchwiftyUtilities
+
 /// Current state of a program.
 public enum ProgramState : Hashable, Sendable {
     case foreground
@@ -32,7 +34,7 @@ extension ProgramState {
         case .uponRequest: return true
 
         #if canImport(FoundationEssentials) || canImport(Foundation)
-        case .temporarilyUntil(let expires): return Date.now < expires
+        case .temporarilyUntil(let expires): return Date.now() < expires
         #endif
 
         @unknown default: return false

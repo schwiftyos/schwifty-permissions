@@ -5,6 +5,14 @@
 //  Created by Evan Anderson on 2/17/25.
 //
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#elseif canImport(Foundation)
+import Foundation
+#endif
+
+import SchwiftyUtilities
+
 /// Network permissions for a process.
 public struct NetworkPermission : SchwiftyPermission {
     public static let permissionType:SchwiftyPermissionType = .network
@@ -17,11 +25,11 @@ public struct NetworkPermission : SchwiftyPermission {
     /// URLs the process is not allowed to contact.
     public private(set) var urlBlacklist:Set<String>
 
-    /// Number of kilobytes per second this process is allowed to download.
-    public private(set) var downloadBandwidthLimit:UInt64
+    /// Network bandwidth limits for connection types.
+    public private(set) var bandwidthLimits:BandwidthLimits?
 
-    /// Number of kilobytes per second this process is allowed to upload.
-    public private(set) var uploadBandwidthLimit:UInt64
+    /// Network quotas for connection types.
+    public private(set) var quotas:Quotas?
 
     @usableFromInline
     var downloadPermissions:ConnectionType.RawValue
@@ -36,8 +44,8 @@ extension NetworkPermission {
         status: .uponRequest,
         urlWhitelist: [],
         urlBlacklist: [],
-        downloadBandwidthLimit: .max,
-        uploadBandwidthLimit: .max,
+        bandwidthLimits: nil,
+        quotas: nil,
         downloadPermissions: .max,
         uploadPermissions: .max
     )
@@ -52,6 +60,28 @@ extension NetworkPermission {
         case hotspot  = 8
         case cellular = 16
         case vpn      = 32
+    }
+}
+// MARK: Quotas
+extension NetworkPermission {
+    public struct Quotas : Sendable {
+        public private(set) var local:NetworkQuota?
+        public private(set) var wired:NetworkQuota?
+        public private(set) var wireless:NetworkQuota?
+        public private(set) var hotspot:NetworkQuota?
+        public private(set) var cellular:NetworkQuota?
+        public private(set) var vpn:NetworkQuota?
+    }
+}
+// MARK: BandwidthLimits
+extension NetworkPermission {
+    public struct BandwidthLimits : Sendable {
+        public private(set) var local:NetworkBandwidthLimit?
+        public private(set) var wired:NetworkBandwidthLimit?
+        public private(set) var wireless:NetworkBandwidthLimit?
+        public private(set) var hotspot:NetworkBandwidthLimit?
+        public private(set) var cellular:NetworkBandwidthLimit?
+        public private(set) var vpn:NetworkBandwidthLimit?
     }
 }
 
@@ -70,7 +100,7 @@ extension NetworkPermission {
     }
 }
 
-// MARK: Update
+// MARK: Upload
 extension NetworkPermission {
     /// Whether or not a process can upload data over the specified connection.
     @inlinable

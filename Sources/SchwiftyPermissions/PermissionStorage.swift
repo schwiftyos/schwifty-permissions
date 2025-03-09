@@ -9,15 +9,29 @@
 /// 
 /// ## Permissions
 /// 
-/// We support two independent kinds of permissions:
+/// We support 3 independent kinds of permissions:
+///   - system-wide (default)
 ///   - per process
-///   - per program (default)
+///   - per program
 /// 
-/// This allows overriding a running program's permissions without overriding its default permissions,
-/// which unlocks more granular control over a program and its child processes on a case-by-case basis.
+/// This allows overriding a running process's permissions without overriding its inherited permissions,
+/// which unlocks more granular control over processes and programs on a case-by-case basis.
 public actor PermissionStorage : Sendable {
     /// Shared permission storage.
     @MainActor public static private(set) var shared:PermissionStorage = PermissionStorage()
+
+    @usableFromInline
+    var _system:SystemPermissions!
+
+    /// System-wide permissions that all processes and programs inherit by default.
+    @inlinable
+    public private(set) var system : SystemPermissions {
+        get {
+            if _system == nil { _system = SystemPermissions() }
+            return _system
+        }
+        set { _system = newValue }
+    }
 
     @usableFromInline
     var programs:[Program.ApplicationID:ProcessPermissions]
@@ -25,7 +39,10 @@ public actor PermissionStorage : Sendable {
     @usableFromInline
     var processes:[Program.ProcessID:ProcessPermissions]
 
-    public init() {
+    public init(
+        system: SystemPermissions? = nil
+    ) {
+        self._system = system
         programs = [:]
         processes = [:]
     }
@@ -39,7 +56,7 @@ extension PermissionStorage {
     /// - Returns: Permissions for a process.
     @inlinable
     public func permissions(for process: Program.ProcessID) -> ProcessPermissions {
-        if let cached:ProcessPermissions = processes[process] {
+        if let cached = processes[process] {
             return cached
         }
         let value:ProcessPermissions = ProcessPermissions()
@@ -66,7 +83,7 @@ extension PermissionStorage {
     /// - Returns: Permissions for a program.
     @inlinable
     public func permissions(for program: Program) -> ProcessPermissions {
-        if let cached:ProcessPermissions = processes[program.pid] ?? programs[program.applicationID] {
+        if let cached = processes[program.pid] ?? programs[program.applicationID] {
             return cached
         }
         let value:ProcessPermissions = ProcessPermissions()
