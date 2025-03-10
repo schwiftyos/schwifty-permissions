@@ -1,5 +1,8 @@
 # This file helps to manage and indicate the codeowners for certain parts of this repository
 
+  # Requests a review from the permissions team
+** @schwiftyos/permission-managers
+
   # Protects this file from tampering
 CODEOWNERS @schwiftyos/technical-managers
 
