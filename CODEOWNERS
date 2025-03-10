@@ -1,1 +1,23 @@
+# This file helps to manage and indicate the codeowners for certain parts of this repository
+
+  # Requests a review from the permissions team
+** @schwiftyos/permission-managers
+
+  # Protects this file from tampering
+CODEOWNERS @schwiftyos/technical-managers
+
+  # Request review on PRs who manipulate the `.github/` folder
+.github/** @schwiftyos/technical-managers
+
+  # Request review on PRs who manipulate yaml files like issue prefabs and actions
+**.yml @schwiftyos/technical-managers
+**.yaml @schwiftyos/technical-managers
+
+  # Require review of hidden files
+.** @schwiftyos/technical-managers
+
+  # Require review of Build Setting manipulation
+Package.swift @schwiftyos/technical-managers
+
+  # Require review of toplevel files
 * @schwiftyos/technical-managers
