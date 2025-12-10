@@ -7,8 +7,8 @@
 // See https://github.com/schwiftyos/schwifty-permissions/CONTRIBUTORS.txt for the list of Schwifty Permissions project authors
 
 /// Disk permissions for a process.
-public struct DiskPermission : SchwiftyPermission {
-    public static let permissionType:SchwiftyPermissionType = .disk
+public struct DiskPermission: SchwiftyPermission {
+    public static let permissionType = SchwiftyPermissionType.disk
 
     public private(set) var status:PermissionStatus
 
@@ -30,7 +30,7 @@ public struct DiskPermission : SchwiftyPermission {
 
 // MARK: Default
 extension DiskPermission {
-    public static let `default`:Self = Self(
+    public static let `default` = Self(
         status: .uponRequest,
         pathReadWhitelist: [],
         pathReadBlacklist: [],
@@ -42,7 +42,7 @@ extension DiskPermission {
 
 // MARK: Action
 extension DiskPermission {
-    public enum Action : Sendable {
+    public enum Action: Sendable {
         case read(String)
         case write(String)
         // TODO: support move?
@@ -66,7 +66,7 @@ extension DiskPermission {
 extension DiskPermission {
     /// Whether or not a process can read from the disk.
     @inlinable
-    public var canRead : Bool {
+    public var canRead: Bool {
         permissions & 0b1 != 0
     }
 }
@@ -75,7 +75,7 @@ extension DiskPermission {
 extension DiskPermission {
     /// Whether or not a process can write to the disk.
     @inlinable
-    public var canWrite : Bool {
+    public var canWrite: Bool {
         permissions & 0b01 != 0
     }
 }

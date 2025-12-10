@@ -6,7 +6,7 @@
 // See https://github.com/schwiftyos/schwifty-permissions/LICENSE.txt for license information
 // See https://github.com/schwiftyos/schwifty-permissions/CONTRIBUTORS.txt for the list of Schwifty Permissions project authors
 
-public enum PermissionError : Error {
+public enum PermissionError: Error {
     case operationDenied
 
     case notOnWhitelist

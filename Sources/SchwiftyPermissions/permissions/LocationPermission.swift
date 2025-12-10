@@ -7,8 +7,8 @@
 // See https://github.com/schwiftyos/schwifty-permissions/CONTRIBUTORS.txt for the list of Schwifty Permissions project authors
 
 /// Location permissions for a process.
-public struct LocationPermission : SchwiftyPermission {
-    public static let permissionType:SchwiftyPermissionType = .location
+public struct LocationPermission: SchwiftyPermission {
+    public static let permissionType = SchwiftyPermissionType.location
 
     public private(set) var status:PermissionStatus
 
@@ -17,7 +17,7 @@ public struct LocationPermission : SchwiftyPermission {
 
 // MARK: Default
 extension LocationPermission {
-    public static let `default`:Self = Self(
+    public static let `default` = Self(
         status: .uponRequest,
         accuracy: .approximate
     )
@@ -25,7 +25,7 @@ extension LocationPermission {
 
 // MARK: Accuracy
 extension LocationPermission {
-    public enum Accuracy : Sendable {
+    public enum Accuracy: Sendable {
         case approximate
         case precise
     }

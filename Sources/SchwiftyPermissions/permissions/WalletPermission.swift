@@ -14,8 +14,8 @@ import Foundation
 #endif
 
 /// Wallet permissions for a process.
-public struct WalletPermission : SchwiftyPermission {
-    public static let permissionType:SchwiftyPermissionType = .wallet
+public struct WalletPermission: SchwiftyPermission {
+    public static let permissionType = SchwiftyPermissionType.wallet
 
     public private(set) var status:PermissionStatus
 
@@ -36,7 +36,7 @@ public struct WalletPermission : SchwiftyPermission {
 
 // MARK: Default
 extension WalletPermission {
-    public static let `default`:Self = Self(
+    public static let `default` = Self(
         status: .uponRequest,
         creditCards: [],
         debitCards: []

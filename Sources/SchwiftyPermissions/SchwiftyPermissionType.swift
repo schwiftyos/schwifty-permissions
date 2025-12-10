@@ -7,7 +7,7 @@
 // See https://github.com/schwiftyos/schwifty-permissions/CONTRIBUTORS.txt for the list of Schwifty Permissions project authors
 
 /// List of permissions that control how a system can behave.
-public enum SchwiftyPermissionType : Sendable {
+public enum SchwiftyPermissionType: Sendable {
     /*// MARK: general
 
     /// Read the system's audio output.
