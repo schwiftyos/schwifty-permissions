@@ -17,7 +17,6 @@ public struct DiskPermission: SchwiftyPermission {
     /// Absolute paths the process cannot write to.
     public private(set) var pathWriteBlacklist:Set<String>
 
-    @usableFromInline
     var permissions:UInt8
 }
 

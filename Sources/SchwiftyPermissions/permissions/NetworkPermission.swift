@@ -25,10 +25,8 @@ public struct NetworkPermission: SchwiftyPermission {
     /// Network quotas for connection types.
     public private(set) var quotas:Quotas?
 
-    @usableFromInline
     var downloadPermissions:ConnectionType.RawValue
 
-    @usableFromInline
     var uploadPermissions:ConnectionType.RawValue
 }
 

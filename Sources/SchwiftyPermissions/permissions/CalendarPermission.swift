@@ -5,10 +5,8 @@ public struct CalendarPermission: SchwiftyPermission {
     
     public private(set) var status:PermissionStatus
 
-    @usableFromInline
     var readPermissions:UInt8
 
-    @usableFromInline
     var writePermissions:UInt8
 }
 

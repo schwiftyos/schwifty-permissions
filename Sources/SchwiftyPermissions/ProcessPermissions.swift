@@ -9,7 +9,6 @@ public final class ProcessPermissions: @unchecked Sendable {
     var _notifications:NotificationPermission! = nil
     var _wallet:WalletPermission! = nil
 
-    @usableFromInline
     init() {
     }
 }
@@ -35,7 +34,6 @@ extension ProcessPermissions {
         return .success(perm)
     }
 
-    @usableFromInline
     func getOrLoad<T: SchwiftyPermission>(
         _ permission: SchwiftyPermissionType,
         for program: Program

@@ -25,7 +25,6 @@ extension ManipulatePermission {
 extension ManipulatePermission {
     /// Permissions for a process that can be manipulated.
     public struct Process: Hashable, Sendable {
-        @usableFromInline
         var permissions:Permission.RawValue
     }
 }

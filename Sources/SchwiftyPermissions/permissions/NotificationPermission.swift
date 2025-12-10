@@ -5,10 +5,8 @@ public struct NotificationPermission: SchwiftyPermission {
 
     public private(set) var status:PermissionStatus
 
-    @usableFromInline
     var permissions:UInt8
 
-    @usableFromInline
     var sendPermissions:AlertType.RawValue
 }
 

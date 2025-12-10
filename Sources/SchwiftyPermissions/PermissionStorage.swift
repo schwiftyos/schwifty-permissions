@@ -14,7 +14,6 @@ public actor PermissionStorage: Sendable {
     /// Shared permission storage.
     @MainActor public static private(set) var shared:PermissionStorage = PermissionStorage()
 
-    @usableFromInline
     var _system:SystemPermissions!
 
     /// System-wide permissions that all processes and programs inherit by default.
@@ -26,10 +25,8 @@ public actor PermissionStorage: Sendable {
         set { _system = newValue }
     }
 
-    @usableFromInline
     var programs:[Program.ApplicationID:ProcessPermissions]
 
-    @usableFromInline
     var processes:[Program.ProcessID:ProcessPermissions]
 
     public init(
