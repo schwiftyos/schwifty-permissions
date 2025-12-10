@@ -34,7 +34,6 @@ public struct NetworkQuota: Sendable {
 // MARK: NetworkPermission
 extension NetworkPermission {
     /// - Returns: The `NetworkQuota` for a `ConnectionType`.
-    @inlinable
     public func quota(for connection: ConnectionType) -> NetworkQuota? {
         switch connection {
         case .local: return quotas?.local
@@ -49,7 +48,6 @@ extension NetworkPermission {
 
     /// - Returns: The active `NetworkQuota` for a `ConnectionType`.
     /// Defaults to the system network quota for the connection type, if configured.
-    @inlinable
     public func activeQuota(for connection: ConnectionType) async -> NetworkQuota? {
         var quota = quota(for: connection)
         if quota == nil {
@@ -65,14 +63,12 @@ extension NetworkPermission {
     }
     
     /// - Returns: Whether or not a number of bytes can be downloaded over a connection type, taking into account the active quota.
-    @inlinable
     public func canDownload(bytes: UInt64, over connection: ConnectionType) async -> Bool {
         guard let quota = await activeQuota(for: connection) else { return true }
         return quota.downloaded + bytes <= quota.download
     }
 
     /// - Returns: Whether or not a number of bytes can be uploaded over a connection type, taking into account the active quota.
-    @inlinable
     public func canUpload(bytes: UInt64, over connection: ConnectionType) async -> Bool {
         guard let quota = await activeQuota(for: connection) else { return true }
         return quota.uploaded + bytes <= quota.upload

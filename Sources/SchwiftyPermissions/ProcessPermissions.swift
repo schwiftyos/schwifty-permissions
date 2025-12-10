@@ -16,7 +16,6 @@ public final class ProcessPermissions: @unchecked Sendable {
 
 // MARK: Program
 extension ProcessPermissions {
-    @inlinable
     public func request<T: SchwiftyPermission>(
         _ permission: SchwiftyPermissionType,
         for program: Program,

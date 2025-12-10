@@ -29,7 +29,6 @@ public struct Program: Sendable {
 
 // MARK: Equatable
 extension Program: Equatable {
-    @inlinable
     public static func == (lhs: Program, rhs: Program) -> Bool {
         return lhs.ownerpid == rhs.ownerpid && lhs.pid == rhs.pid
     }
@@ -37,7 +36,6 @@ extension Program: Equatable {
 
 // MARK: Hashable
 extension Program: Hashable {
-    @inlinable
     public func hash(into hasher: inout Hasher) {
         hasher.combine(ownerpid)
         hasher.combine(pid)
@@ -51,7 +49,6 @@ extension Program {
     /// - Parameters:
     ///   - permission: Permission you want to request.
     ///   - reason: Reason why the program is requesting the permission.
-    @inlinable
     public func request<T: SchwiftyPermission>(
         _ permission: SchwiftyPermissionType,
         reason: String

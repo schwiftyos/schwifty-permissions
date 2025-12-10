@@ -18,13 +18,11 @@ public protocol SchwiftyPermission: Sendable {
 }
 
 extension SchwiftyPermission {
-    @inlinable
     public static func loadSettings(for program: Program) -> Self {
         // TODO: return existing settings for application id
         return .default
     }
 
-    @inlinable
     public static func loadSystemSettings() -> Self {
         // TODO: return existing settings from disk
         return .default

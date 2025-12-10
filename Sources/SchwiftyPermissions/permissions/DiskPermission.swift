@@ -41,7 +41,6 @@ extension DiskPermission {
         // TODO: support move?
     }
 
-    @inlinable
     public func canPerform(state: ProgramState, action: Action) -> Bool {
         guard state.allowsPermissionStatus(status) else { return false }
         switch action {
@@ -58,7 +57,6 @@ extension DiskPermission {
 // MARK: Read
 extension DiskPermission {
     /// Whether or not a process can read from the disk.
-    @inlinable
     public var canRead: Bool {
         permissions & 0b1 != 0
     }
@@ -67,7 +65,6 @@ extension DiskPermission {
 // MARK: Write
 extension DiskPermission {
     /// Whether or not a process can write to the disk.
-    @inlinable
     public var canWrite: Bool {
         permissions & 0b01 != 0
     }

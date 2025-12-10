@@ -38,7 +38,6 @@ extension ManipulatePermission.Process {
         case changePermissionsWithoutUserInteraction = 1
     }
 
-    @inlinable
     public func hasPermission(to permission: Permission) -> Bool {
         return permissions & permission.rawValue != 0
     }

@@ -18,7 +18,6 @@ public actor PermissionStorage: Sendable {
     var _system:SystemPermissions!
 
     /// System-wide permissions that all processes and programs inherit by default.
-    @inlinable
     public private(set) var system: SystemPermissions {
         get {
             if _system == nil { _system = SystemPermissions() }
@@ -48,7 +47,6 @@ public actor PermissionStorage: Sendable {
 // MARK: Processes
 extension PermissionStorage {
     /// - Returns: Permissions for a process.
-    @inlinable
     public func permissions(for process: Program.ProcessID) -> ProcessPermissions {
         if let cached = processes[process] {
             return cached
@@ -75,7 +73,6 @@ extension PermissionStorage {
 // MARK: Programs
 extension PermissionStorage {
     /// - Returns: Permissions for a program.
-    @inlinable
     public func permissions(for program: Program) -> ProcessPermissions {
         if let cached = processes[program.pid] ?? programs[program.applicationID] {
             return cached

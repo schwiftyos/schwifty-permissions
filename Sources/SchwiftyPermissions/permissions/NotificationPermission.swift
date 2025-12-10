@@ -34,7 +34,6 @@ extension NotificationPermission {
         case timeSensitive = 4
     }
 
-    @inlinable
     public func canSend(_ alertType: AlertType = .normal) -> Bool {
         return canSend && (sendPermissions & alertType.rawValue != 0)
     }
@@ -42,7 +41,6 @@ extension NotificationPermission {
 
 // MARK: Send
 extension NotificationPermission {
-    @inlinable
     public var canSend: Bool {
         permissions & 0b1 != 0
     }
@@ -50,7 +48,6 @@ extension NotificationPermission {
 
 // MARK: Badge
 extension NotificationPermission {
-    @inlinable
     public var canShowBadge: Bool {
         permissions & 0b01 != 0
     }
@@ -58,7 +55,6 @@ extension NotificationPermission {
 
 // MARK: Sound
 extension NotificationPermission {
-    @inlinable
     public var canPlaySound: Bool {
         permissions & 0b001 != 0
     }

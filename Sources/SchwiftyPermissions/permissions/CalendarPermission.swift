@@ -58,7 +58,6 @@ extension CalendarPermission {
 
 // MARK: Read
 extension CalendarPermission {
-    @inlinable
     public var canRead: Bool {
         readPermissions & 0b1 != 0
     }
@@ -66,7 +65,6 @@ extension CalendarPermission {
 
 // MARK: Write
 extension CalendarPermission {
-    @inlinable
     public var canWrite: Bool {
         writePermissions & 0b1 != 0
     }

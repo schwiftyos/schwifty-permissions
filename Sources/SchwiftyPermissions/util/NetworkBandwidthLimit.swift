@@ -13,7 +13,6 @@ public struct NetworkBandwidthLimit: Sendable {
 // MARK: NetworkPermission
 extension NetworkPermission {
     /// - Returns: The `NetworkBandwidthLimit` for a `ConnectionType`.
-    @inlinable
     public func bandwidthLimit(for connection: ConnectionType) -> NetworkBandwidthLimit? {
         switch connection {
         case .local: return bandwidthLimits?.local
@@ -28,7 +27,6 @@ extension NetworkPermission {
 
     /// - Returns: The active `NetworkBandwidthLimit` for a `ConnectionType`.
     /// Defaults to the system network bandwidth limit for the connection type, if configured.
-    @inlinable
     public func activeBandwidthLimit(for connection: ConnectionType) async -> NetworkBandwidthLimit? {
         var limit = bandwidthLimit(for: connection)
         if limit == nil {
