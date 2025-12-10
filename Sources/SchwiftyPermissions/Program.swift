@@ -1,5 +1,5 @@
 
-public struct Program : Sendable {
+public struct Program: Sendable {
     public typealias ApplicationID = String
     public typealias ProcessID = UInt64
 
@@ -28,7 +28,7 @@ public struct Program : Sendable {
 }
 
 // MARK: Equatable
-extension Program : Equatable {
+extension Program: Equatable {
     @inlinable
     public static func == (lhs: Program, rhs: Program) -> Bool {
         return lhs.ownerpid == rhs.ownerpid && lhs.pid == rhs.pid
@@ -36,7 +36,7 @@ extension Program : Equatable {
 }
 
 // MARK: Hashable
-extension Program : Hashable {
+extension Program: Hashable {
     @inlinable
     public func hash(into hasher: inout Hasher) {
         hasher.combine(ownerpid)

@@ -1,5 +1,5 @@
 
-public enum PermissionCategory : Sendable {
+public enum PermissionCategory: Sendable {
     case audio
     case bluetooth
     case camera

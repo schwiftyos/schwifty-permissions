@@ -8,8 +8,8 @@ import Foundation
 import SchwiftyUtilities
 
 /// Network permissions for a process.
-public struct NetworkPermission : SchwiftyPermission {
-    public static let permissionType:SchwiftyPermissionType = .network
+public struct NetworkPermission: SchwiftyPermission {
+    public static let permissionType = SchwiftyPermissionType.network
 
     public private(set) var status:PermissionStatus
 
@@ -34,7 +34,7 @@ public struct NetworkPermission : SchwiftyPermission {
 
 // MARK: Default
 extension NetworkPermission {
-    public static let `default`:Self = Self(
+    public static let `default` = Self(
         status: .uponRequest,
         urlWhitelist: [],
         urlBlacklist: [],
@@ -47,7 +47,7 @@ extension NetworkPermission {
 
 // MARK: ConnectionType
 extension NetworkPermission {
-    public enum ConnectionType : UInt8, Sendable {
+    public enum ConnectionType: UInt8, Sendable {
         case local    = 1
         case wired    = 2
         case wireless = 4
@@ -56,9 +56,10 @@ extension NetworkPermission {
         case vpn      = 32
     }
 }
+
 // MARK: Quotas
 extension NetworkPermission {
-    public struct Quotas : Sendable {
+    public struct Quotas: Sendable {
         public private(set) var local:NetworkQuota?
         public private(set) var wired:NetworkQuota?
         public private(set) var wireless:NetworkQuota?
@@ -67,9 +68,10 @@ extension NetworkPermission {
         public private(set) var vpn:NetworkQuota?
     }
 }
+
 // MARK: BandwidthLimits
 extension NetworkPermission {
-    public struct BandwidthLimits : Sendable {
+    public struct BandwidthLimits: Sendable {
         public private(set) var local:NetworkBandwidthLimit?
         public private(set) var wired:NetworkBandwidthLimit?
         public private(set) var wireless:NetworkBandwidthLimit?

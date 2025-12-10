@@ -1,5 +1,5 @@
 
-public enum PermissionError : Error {
+public enum PermissionError: Error {
     case operationDenied
 
     case notOnWhitelist

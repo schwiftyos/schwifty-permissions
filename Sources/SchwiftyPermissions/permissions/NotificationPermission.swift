@@ -1,7 +1,7 @@
 
 /// Notification permissions for a process.
-public struct NotificationPermission : SchwiftyPermission {
-    public static let permissionType:SchwiftyPermissionType = .notification
+public struct NotificationPermission: SchwiftyPermission {
+    public static let permissionType = SchwiftyPermissionType.notification
 
     public private(set) var status:PermissionStatus
 
@@ -14,7 +14,7 @@ public struct NotificationPermission : SchwiftyPermission {
 
 // MARK: Default
 extension NotificationPermission {
-    public static let `default`:Self = Self(
+    public static let `default` = Self(
         status: .uponRequest,
         permissions: .max,
         sendPermissions: .max
@@ -23,7 +23,7 @@ extension NotificationPermission {
 
 // MARK: AlertType
 extension NotificationPermission {
-    public enum AlertType : UInt8, Sendable {
+    public enum AlertType: UInt8, Sendable {
         /// Regular notification.
         case normal        = 1
 
@@ -43,7 +43,7 @@ extension NotificationPermission {
 // MARK: Send
 extension NotificationPermission {
     @inlinable
-    public var canSend : Bool {
+    public var canSend: Bool {
         permissions & 0b1 != 0
     }
 }
@@ -51,7 +51,7 @@ extension NotificationPermission {
 // MARK: Badge
 extension NotificationPermission {
     @inlinable
-    public var canShowBadge : Bool {
+    public var canShowBadge: Bool {
         permissions & 0b01 != 0
     }
 }
@@ -59,7 +59,7 @@ extension NotificationPermission {
 // MARK: Sound
 extension NotificationPermission {
     @inlinable
-    public var canPlaySound : Bool {
+    public var canPlaySound: Bool {
         permissions & 0b001 != 0
     }
 }

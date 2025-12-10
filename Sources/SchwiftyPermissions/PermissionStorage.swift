@@ -10,7 +10,7 @@
 /// 
 /// This allows overriding a running process's permissions without overriding its inherited permissions,
 /// which unlocks more granular control over processes and programs on a case-by-case basis.
-public actor PermissionStorage : Sendable {
+public actor PermissionStorage: Sendable {
     /// Shared permission storage.
     @MainActor public static private(set) var shared:PermissionStorage = PermissionStorage()
 
@@ -19,7 +19,7 @@ public actor PermissionStorage : Sendable {
 
     /// System-wide permissions that all processes and programs inherit by default.
     @inlinable
-    public private(set) var system : SystemPermissions {
+    public private(set) var system: SystemPermissions {
         get {
             if _system == nil { _system = SystemPermissions() }
             return _system

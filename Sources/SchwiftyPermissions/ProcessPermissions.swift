@@ -1,6 +1,6 @@
 
 /// Permissions for a process.
-public final class ProcessPermissions : @unchecked Sendable {
+public final class ProcessPermissions: @unchecked Sendable {
     var _calendar:CalendarPermission! = nil
     var _disk:DiskPermission! = nil
     var _location:LocationPermission! = nil

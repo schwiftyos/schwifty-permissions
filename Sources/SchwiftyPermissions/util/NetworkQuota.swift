@@ -9,7 +9,7 @@ import SchwiftyUtilities
 
 // MARK: NetworkQuota
 /// Limits the amount of bytes a process can download/upload within a time frame.
-public struct NetworkQuota : Sendable {
+public struct NetworkQuota: Sendable {
     #if canImport(FoundationEssentials) || canImport(Foundation)
     /// When tracking of the quota begins.
     public private(set) var starts:Date
@@ -57,7 +57,7 @@ extension NetworkPermission {
         }
         #if canImport(FoundationEssentials) || canImport(Foundation)
         if let quota {
-            let now:Date = Date.now()
+            let now = Date.now()
             guard now >= quota.starts && now < quota.ends else { return nil }
         }
         #endif

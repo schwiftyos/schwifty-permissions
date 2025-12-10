@@ -2,7 +2,7 @@
 import SchwiftyUtilities
 
 /// Network bandwidth limits.
-public struct NetworkBandwidthLimit : Sendable {
+public struct NetworkBandwidthLimit: Sendable {
     /// Number of bytes allowed to download.
     public private(set) var download:BinaryUnit
 

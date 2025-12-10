@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// List of available statuses a permission can have.
-public enum PermissionStatus : Hashable, Sendable {
+public enum PermissionStatus: Hashable, Sendable {
     /// Access is never allowed.
     case never
 

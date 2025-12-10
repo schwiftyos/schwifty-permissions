@@ -1,7 +1,7 @@
 
 /// Calendar permissions for a process.
-public struct CalendarPermission : SchwiftyPermission {
-    public static let permissionType:SchwiftyPermissionType = .calendar
+public struct CalendarPermission: SchwiftyPermission {
+    public static let permissionType = SchwiftyPermissionType.calendar
     
     public private(set) var status:PermissionStatus
 
@@ -14,7 +14,7 @@ public struct CalendarPermission : SchwiftyPermission {
 
 // MARK: Default
 extension CalendarPermission {
-    public static let `default`:Self = Self(
+    public static let `default` = Self(
         status: .uponRequest,
         readPermissions: .max,
         writePermissions: .max
@@ -24,7 +24,7 @@ extension CalendarPermission {
 // MARK: Range
 extension CalendarPermission {
     /// How far into the future, or past, a process has access to.
-    public enum Range : Sendable {
+    public enum Range: Sendable {
         /// Can access all calendar events.
         case unlimited
 
@@ -59,7 +59,7 @@ extension CalendarPermission {
 // MARK: Read
 extension CalendarPermission {
     @inlinable
-    public var canRead : Bool {
+    public var canRead: Bool {
         readPermissions & 0b1 != 0
     }
 }
@@ -67,7 +67,7 @@ extension CalendarPermission {
 // MARK: Write
 extension CalendarPermission {
     @inlinable
-    public var canWrite : Bool {
+    public var canWrite: Bool {
         writePermissions & 0b1 != 0
     }
 }

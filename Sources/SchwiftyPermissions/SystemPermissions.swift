@@ -1,5 +1,5 @@
 
-public final class SystemPermissions : @unchecked Sendable {
+public final class SystemPermissions: @unchecked Sendable {
     var _calendar:CalendarPermission! = nil
     var _disk:DiskPermission! = nil
     var _location:LocationPermission! = nil
@@ -15,7 +15,7 @@ public final class SystemPermissions : @unchecked Sendable {
 
 // MARK: Calendar
 extension SystemPermissions {
-    public var calendar : CalendarPermission {
+    public var calendar: CalendarPermission {
         get {
             if _calendar == nil { _calendar = .loadSystemSettings() }
             return _calendar
@@ -26,7 +26,7 @@ extension SystemPermissions {
 
 // MARK: Disk
 extension SystemPermissions {
-    public private(set) var disk : DiskPermission {
+    public private(set) var disk: DiskPermission {
         get {
             if _disk == nil { _disk = .loadSystemSettings() }
             return _disk
@@ -37,7 +37,7 @@ extension SystemPermissions {
 
 // MARK: Location
 extension SystemPermissions {
-    public private(set) var location : LocationPermission {
+    public private(set) var location: LocationPermission {
         get {
             if _location == nil { _location = .loadSystemSettings() }
             return _location
@@ -48,7 +48,7 @@ extension SystemPermissions {
 
 // MARK: Manipulation
 extension SystemPermissions {
-    public private(set) var manipulation : ManipulatePermission {
+    public private(set) var manipulation: ManipulatePermission {
         get {
             if _manipulation == nil { _manipulation = .loadSystemSettings() }
             return _manipulation
@@ -59,7 +59,7 @@ extension SystemPermissions {
 
 // MARK: Network
 extension SystemPermissions {
-    public private(set) var network : NetworkPermission {
+    public private(set) var network: NetworkPermission {
         get {
             if _network == nil { _network = .loadSystemSettings() }
             return _network
@@ -70,7 +70,7 @@ extension SystemPermissions {
 
 // MARK: Notifications
 extension SystemPermissions {
-    public private(set) var notifications : NotificationPermission {
+    public private(set) var notifications: NotificationPermission {
         get {
             if _notifications == nil { _notifications = .loadSystemSettings() }
             return _notifications
@@ -81,7 +81,7 @@ extension SystemPermissions {
 
 // MARK: Wallet
 extension SystemPermissions {
-    public private(set) var wallet : WalletPermission {
+    public private(set) var wallet: WalletPermission {
         get {
             if _wallet == nil { _wallet = .loadSystemSettings() }
             return _wallet

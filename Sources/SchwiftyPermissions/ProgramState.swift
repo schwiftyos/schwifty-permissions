@@ -9,7 +9,7 @@ import Foundation
 import SchwiftyUtilities
 
 /// Current state of a program.
-public enum ProgramState : Hashable, Sendable {
+public enum ProgramState: Hashable, Sendable {
     case foreground
     case background
     case notRunning

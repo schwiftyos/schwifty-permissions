@@ -1,6 +1,6 @@
 
 /// List of permissions that control how a system can behave.
-public enum SchwiftyPermissionType : Sendable {
+public enum SchwiftyPermissionType: Sendable {
     /*// MARK: general
 
     /// Read the system's audio output.
