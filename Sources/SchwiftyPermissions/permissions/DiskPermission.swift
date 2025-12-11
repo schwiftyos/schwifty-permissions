@@ -5,16 +5,16 @@ public struct DiskPermission: SchwiftyPermission {
 
     public internal(set) var status:PermissionStatus
 
-    /// Absolute paths the process can read.
+    /// Absolute file paths that are readable.
     public internal(set) var pathReadWhitelist:Set<String>
 
-    /// Absolute paths the process cannot read.
+    /// Absolute file paths that are not readable.
     public internal(set) var pathReadBlacklist:Set<String>
 
-    /// Absolute paths the process can write to.
+    /// Absolute file paths that are writable.
     public internal(set) var pathWriteWhitelist:Set<String>
 
-    /// Absolute paths the process cannot write to.
+    /// Absolute file paths that are not writable.
     public internal(set) var pathWriteBlacklist:Set<String>
 
     var permissions:Flag.RawValue
@@ -52,6 +52,7 @@ extension DiskPermission {
         // TODO: support move?
     }
 
+    /// - Returns: If the given action is allowed to be executed in the given state.
     public func canPerform(action: Action, state: ProgramState) -> Bool {
         guard state.allowsPermissionStatus(status) else { return false }
         switch action {
@@ -67,7 +68,7 @@ extension DiskPermission {
 
 // MARK: Read
 extension DiskPermission {
-    /// Whether or not a process can read from the disk.
+    /// - Returns: If reading from disk is allowed.
     public var canRead: Bool {
         Flag.read.isEnabled(permissions)
     }
@@ -75,7 +76,7 @@ extension DiskPermission {
 
 // MARK: Write
 extension DiskPermission {
-    /// Whether or not a process can write to the disk.
+    /// - Returns: If writing to disk is allowed.
     public var canWrite: Bool {
         Flag.write.isEnabled(permissions)
     }
