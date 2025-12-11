@@ -17,7 +17,19 @@ public struct DiskPermission: SchwiftyPermission {
     /// Absolute paths the process cannot write to.
     public private(set) var pathWriteBlacklist:Set<String>
 
-    var permissions:UInt8
+    var permissions:Flag.RawValue
+}
+
+// MARK: Flag
+extension DiskPermission {
+    enum Flag: UInt8, Sendable {
+        case read  = 1
+        case write = 2
+
+        func isEnabled(_ permissions: RawValue) -> Bool {
+            permissions & rawValue > 0
+        }
+    }
 }
 
 // MARK: Default
@@ -40,7 +52,7 @@ extension DiskPermission {
         // TODO: support move?
     }
 
-    public func canPerform(state: ProgramState, action: Action) -> Bool {
+    public func canPerform(action: Action, state: ProgramState) -> Bool {
         guard state.allowsPermissionStatus(status) else { return false }
         switch action {
         case .read(let path):
@@ -57,7 +69,7 @@ extension DiskPermission {
 extension DiskPermission {
     /// Whether or not a process can read from the disk.
     public var canRead: Bool {
-        permissions & 0b1 != 0
+        Flag.read.isEnabled(permissions)
     }
 }
 
@@ -65,6 +77,19 @@ extension DiskPermission {
 extension DiskPermission {
     /// Whether or not a process can write to the disk.
     public var canWrite: Bool {
-        permissions & 0b01 != 0
+        Flag.write.isEnabled(permissions)
+    }
+}
+
+// MARK: Modifications
+extension DiskPermission {
+    /// Mutates `permissions` to reflect its new read status.
+    mutating func setCanRead(_ newValue: Bool) {
+        permissions = newValue ? permissions | Flag.read.rawValue : permissions & ~Flag.read.rawValue
+    }
+
+    /// Mutates `permissions` to reflect its new write status.
+    mutating func setCanWrite(_ newValue: Bool) {
+        permissions = newValue ? permissions | Flag.write.rawValue : permissions & ~Flag.write.rawValue
     }
 }
