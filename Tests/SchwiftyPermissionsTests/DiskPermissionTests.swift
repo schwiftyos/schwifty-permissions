@@ -46,6 +46,14 @@ extension DiskPermissionTests {
         #expect(perm.canPerform(action: .read("/home/user1"), state: state))
         #expect(!perm.canPerform(action: .read("/home/user2"), state: state))
     }
+
+    @Test(arguments: [ProgramState.foreground, .background, .notRunning])
+    func diskPermissionCannotReadOutsideWhitelist(state: ProgramState) {
+        var perm = DiskPermission.default
+        perm.pathReadWhitelist.insert("/home/user1")
+        #expect(perm.canPerform(action: .read("/home/user1"), state: state))
+        #expect(!perm.canPerform(action: .read("/home/user2"), state: state))
+    }
 }
 
 // MARK: Write
@@ -61,6 +69,14 @@ extension DiskPermissionTests {
     func diskPermissionCannotWriteWhenBlacklisted(state: ProgramState) {
         var perm = DiskPermission.default
         perm.pathWriteBlacklist.insert("/home/user2")
+        #expect(perm.canPerform(action: .write("/home/user1"), state: state))
+        #expect(!perm.canPerform(action: .write("/home/user2"), state: state))
+    }
+
+    @Test(arguments: [ProgramState.foreground, .background, .notRunning])
+    func diskPermissionCannotWriteOutsideWhitelist(state: ProgramState) {
+        var perm = DiskPermission.default
+        perm.pathWriteWhitelist.insert("/home/user1")
         #expect(perm.canPerform(action: .write("/home/user1"), state: state))
         #expect(!perm.canPerform(action: .write("/home/user2"), state: state))
     }
