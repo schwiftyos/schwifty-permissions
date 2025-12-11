@@ -13,17 +13,9 @@ extension DiskPermissionTests {
         #expect(DiskPermission.default.canRead)
     }
 
-    @Test
-    func diskPermissionDefaultsCanReadPathWhenInForeground() {
-        #expect(DiskPermission.default.canPerform(action: .read("/home/user"), state: .foreground))
-    }
-    @Test
-    func diskPermissionDefaultsCanReadPathWhenInBackground() {
-        #expect(DiskPermission.default.canPerform(action: .read("/home/user"), state: .background))
-    }
-    @Test
-    func diskPermissionDefaultsCanReadPathWhenNotRunning() {
-        #expect(DiskPermission.default.canPerform(action: .read("/home/user"), state: .notRunning))
+    @Test(arguments: [ProgramState.foreground, ProgramState.background, ProgramState.notRunning])
+    func diskPermissionDefaultsCanReadPath(state: ProgramState) {
+        #expect(DiskPermission.default.canPerform(action: .read("/home/user"), state: state))
     }
 
 
@@ -31,38 +23,29 @@ extension DiskPermissionTests {
     func diskPermissionDefaultsCanWrite() {
         #expect(DiskPermission.default.canWrite)
     }
-    @Test
-    func diskPermissionDefaultsCanWritePathWhenInForeground() {
-        #expect(DiskPermission.default.canPerform(action: .read("/home/user"), state: .foreground))
-    }
 
-    @Test
-    func diskPermissionDefaultsCanWritePathWhenInBackground() {
-        #expect(DiskPermission.default.canPerform(action: .read("/home/user"), state: .background))
-    }
-
-    @Test
-    func diskPermissionDefaultsCanWritePathWhenNotRunning() {
-        #expect(DiskPermission.default.canPerform(action: .read("/home/user"), state: .notRunning))
+    @Test(arguments: [ProgramState.foreground, ProgramState.background, ProgramState.notRunning])
+    func diskPermissionDefaultsCanWritePath(state: ProgramState) {
+        #expect(DiskPermission.default.canPerform(action: .write("/home/user"), state: state))
     }
 }
 
 // MARK: Read
 extension DiskPermissionTests {
-    @Test
-    func diskPermissionCannotReadWhenRevoked() {
+    @Test(arguments: [ProgramState.foreground, ProgramState.background, ProgramState.notRunning])
+    func diskPermissionCannotReadWhenRevoked(state: ProgramState) {
         var perm = DiskPermission.default
         perm.setCanRead(false)
-        #expect(!perm.canPerform(action: .read("/home/user"), state: .foreground))
+        #expect(!perm.canPerform(action: .read("/home/user"), state: state))
     }
 }
 
 // MARK: Write
 extension DiskPermissionTests {
-    @Test
-    func diskPermissionCannotWriteWhenRevoked() {
+    @Test(arguments: [ProgramState.foreground, ProgramState.background, ProgramState.notRunning])
+    func diskPermissionCannotWriteWhenRevoked(state: ProgramState) {
         var perm = DiskPermission.default
         perm.setCanWrite(false)
-        #expect(!perm.canPerform(action: .write("/home/user"), state: .foreground))
+        #expect(!perm.canPerform(action: .write("/home/user"), state: state))
     }
 }
