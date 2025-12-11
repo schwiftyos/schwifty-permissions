@@ -3,21 +3,33 @@
 public struct DiskPermission: SchwiftyPermission {
     public static let permissionType = SchwiftyPermissionType.disk
 
-    public private(set) var status:PermissionStatus
+    public internal(set) var status:PermissionStatus
 
-    /// Absolute paths the process can read.
-    public private(set) var pathReadWhitelist:Set<String>
+    /// Absolute file paths that are readable.
+    public internal(set) var pathReadWhitelist:Set<String>
 
-    /// Absolute paths the process cannot read.
-    public private(set) var pathReadBlacklist:Set<String>
+    /// Absolute file paths that are not readable.
+    public internal(set) var pathReadBlacklist:Set<String>
 
-    /// Absolute paths the process can write to.
-    public private(set) var pathWriteWhitelist:Set<String>
+    /// Absolute file paths that are writable.
+    public internal(set) var pathWriteWhitelist:Set<String>
 
-    /// Absolute paths the process cannot write to.
-    public private(set) var pathWriteBlacklist:Set<String>
+    /// Absolute file paths that are not writable.
+    public internal(set) var pathWriteBlacklist:Set<String>
 
-    var permissions:UInt8
+    var permissions:Flag.RawValue
+}
+
+// MARK: Flag
+extension DiskPermission {
+    enum Flag: UInt8, Sendable {
+        case read  = 1
+        case write = 2
+
+        func isEnabled(_ permissions: RawValue) -> Bool {
+            permissions & rawValue > 0
+        }
+    }
 }
 
 // MARK: Default
@@ -40,7 +52,8 @@ extension DiskPermission {
         // TODO: support move?
     }
 
-    public func canPerform(state: ProgramState, action: Action) -> Bool {
+    /// - Returns: If the given action is allowed to be executed in the given state.
+    public func canPerform(action: Action, state: ProgramState) -> Bool {
         guard state.allowsPermissionStatus(status) else { return false }
         switch action {
         case .read(let path):
@@ -55,16 +68,29 @@ extension DiskPermission {
 
 // MARK: Read
 extension DiskPermission {
-    /// Whether or not a process can read from the disk.
+    /// - Returns: If reading from disk is allowed.
     public var canRead: Bool {
-        permissions & 0b1 != 0
+        Flag.read.isEnabled(permissions)
     }
 }
 
 // MARK: Write
 extension DiskPermission {
-    /// Whether or not a process can write to the disk.
+    /// - Returns: If writing to disk is allowed.
     public var canWrite: Bool {
-        permissions & 0b01 != 0
+        Flag.write.isEnabled(permissions)
+    }
+}
+
+// MARK: Modifications
+extension DiskPermission {
+    /// Mutates `permissions` to reflect its new read status.
+    mutating func setCanRead(_ newValue: Bool) {
+        permissions = newValue ? permissions | Flag.read.rawValue : permissions & ~Flag.read.rawValue
+    }
+
+    /// Mutates `permissions` to reflect its new write status.
+    mutating func setCanWrite(_ newValue: Bool) {
+        permissions = newValue ? permissions | Flag.write.rawValue : permissions & ~Flag.write.rawValue
     }
 }
