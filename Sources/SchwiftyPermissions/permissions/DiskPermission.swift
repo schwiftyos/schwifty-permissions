@@ -3,19 +3,19 @@
 public struct DiskPermission: SchwiftyPermission {
     public static let permissionType = SchwiftyPermissionType.disk
 
-    public private(set) var status:PermissionStatus
+    public internal(set) var status:PermissionStatus
 
     /// Absolute paths the process can read.
-    public private(set) var pathReadWhitelist:Set<String>
+    public internal(set) var pathReadWhitelist:Set<String>
 
     /// Absolute paths the process cannot read.
-    public private(set) var pathReadBlacklist:Set<String>
+    public internal(set) var pathReadBlacklist:Set<String>
 
     /// Absolute paths the process can write to.
-    public private(set) var pathWriteWhitelist:Set<String>
+    public internal(set) var pathWriteWhitelist:Set<String>
 
     /// Absolute paths the process cannot write to.
-    public private(set) var pathWriteBlacklist:Set<String>
+    public internal(set) var pathWriteBlacklist:Set<String>
 
     var permissions:Flag.RawValue
 }
