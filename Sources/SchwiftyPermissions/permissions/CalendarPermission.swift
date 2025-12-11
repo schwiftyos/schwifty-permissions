@@ -5,10 +5,8 @@ public struct CalendarPermission: SchwiftyPermission {
     
     public private(set) var status:PermissionStatus
 
-    @usableFromInline
     var readPermissions:UInt8
 
-    @usableFromInline
     var writePermissions:UInt8
 }
 
@@ -58,7 +56,6 @@ extension CalendarPermission {
 
 // MARK: Read
 extension CalendarPermission {
-    @inlinable
     public var canRead: Bool {
         readPermissions & 0b1 != 0
     }
@@ -66,7 +63,6 @@ extension CalendarPermission {
 
 // MARK: Write
 extension CalendarPermission {
-    @inlinable
     public var canWrite: Bool {
         writePermissions & 0b1 != 0
     }

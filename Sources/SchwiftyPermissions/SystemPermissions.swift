@@ -8,7 +8,6 @@ public final class SystemPermissions: @unchecked Sendable {
     var _notifications:NotificationPermission! = nil
     var _wallet:WalletPermission! = nil
 
-    @usableFromInline
     init() {
     }
 }

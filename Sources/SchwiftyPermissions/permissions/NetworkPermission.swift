@@ -25,10 +25,8 @@ public struct NetworkPermission: SchwiftyPermission {
     /// Network quotas for connection types.
     public private(set) var quotas:Quotas?
 
-    @usableFromInline
     var downloadPermissions:ConnectionType.RawValue
 
-    @usableFromInline
     var uploadPermissions:ConnectionType.RawValue
 }
 
@@ -84,13 +82,11 @@ extension NetworkPermission {
 // MARK: Download
 extension NetworkPermission {
     /// Whether or not a process can download data over the specified connection.
-    @inlinable
     public func canDownload(over connection: ConnectionType) -> Bool {
         return downloadPermissions & connection.rawValue != 0
     }
 
     /// Whether or not a process can download data from the specified URL over the specified connection.
-    @inlinable
     public func canDownload(from url: String, over connection: ConnectionType) -> Bool {
         return canDownload(over: connection) && (urlWhitelist.isEmpty || urlWhitelist.contains(url)) && !urlBlacklist.contains(url)
     }
@@ -99,13 +95,11 @@ extension NetworkPermission {
 // MARK: Upload
 extension NetworkPermission {
     /// Whether or not a process can upload data over the specified connection.
-    @inlinable
     public func canUpload(over connection: ConnectionType) -> Bool {
         return uploadPermissions & connection.rawValue != 0
     }
 
     /// Whether or not a process can upload data to the specified URL over the specified connection.
-    @inlinable
     public func canUpload(to url: String, over connection: ConnectionType) -> Bool {
         return canUpload(over: connection) && (urlWhitelist.isEmpty || urlWhitelist.contains(url)) && !urlBlacklist.contains(url)
     }
